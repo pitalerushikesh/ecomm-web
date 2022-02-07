@@ -1,13 +1,13 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import "./App.css";
-import App from "./App";
-import Homepage from "./user/Homepage";
+
 import "./user/css/Homepage.css";
+import Router from "./Router";
 
 ReactDOM.render(
   <React.StrictMode>
-    <Homepage />
+    <Router />
   </React.StrictMode>,
   document.getElementById("root")
 );

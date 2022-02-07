@@ -2,10 +2,6 @@ import { makeStyles } from "@mui/styles";
 import React from "react";
 import Navbar from "./navbar/Navbar";
 
-const styles = makeStyles((theme) => ({
-  toolbar: theme.mixins.toolbar,
-}));
-
 const Base = ({ children, className }) => {
   // const classes = styles();
   return (

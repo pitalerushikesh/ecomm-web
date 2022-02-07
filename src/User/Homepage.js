@@ -5,6 +5,7 @@ import {
   Grid,
   Typography,
   Container,
+  IconButton,
 } from "@mui/material";
 import { makeStyles } from "@mui/styles";
 import React from "react";
@@ -24,7 +25,13 @@ const ProductCard = () => {
   return (
     <Card
       sx={{
+        maxWidth: "383px",
+        minWidth: "383px",
+
+        border: "1px solid #fff",
         borderRadius: "30px",
+        boxShadow: "0px 0px 50px 5px #fff inset",
+        backgroundColor: "#ffe0b2",
       }}
     >
       <CardContent>
@@ -171,13 +178,19 @@ const Homepage = () => {
             lg={4}
             md={4}
             sx={{
-              justifyContent: "end",
-
-              display: { xs: "none", sm: "none", md: "block" },
-              display: "flex",
+              justifyContent: "flex-end",
+              display: { xs: "none", sm: "none", md: "flex" },
             }}
           >
-            <FaShoppingCart />
+            <IconButton
+              sx={{
+                color: "#000",
+                alignItems: "start",
+              }}
+              size="small"
+            >
+              <FaShoppingCart />
+            </IconButton>
           </Grid>
         </Grid>
       </Box>
@@ -191,15 +204,78 @@ const Homepage = () => {
           justifyContent="center"
           alignItems="center"
           display="flex"
-          spacing={18}
+          spacing={8}
         >
-          <Grid item lg={4} md={6} xs={12} sm={12}>
+          <Grid
+            item
+            lg={4}
+            md={6}
+            xs={12}
+            sm={12}
+            justifyContent="center"
+            alignItems="center"
+            display="flex"
+          >
             <ProductCard />
           </Grid>
-          <Grid item lg={4} md={6} xs={12} sm={12}>
+          <Grid
+            item
+            lg={4}
+            md={6}
+            xs={12}
+            sm={12}
+            justifyContent="center"
+            alignItems="center"
+            display="flex"
+          >
             <ProductCard />
           </Grid>
-          <Grid item lg={4} md={6} xs={12} sm={12}>
+          <Grid
+            item
+            lg={4}
+            md={6}
+            xs={12}
+            sm={12}
+            justifyContent="center"
+            alignItems="center"
+            display="flex"
+          >
+            <ProductCard />
+          </Grid>
+          <Grid
+            item
+            lg={4}
+            md={6}
+            xs={12}
+            sm={12}
+            justifyContent="center"
+            alignItems="center"
+            display="flex"
+          >
+            <ProductCard />
+          </Grid>
+          <Grid
+            item
+            lg={4}
+            md={6}
+            xs={12}
+            sm={12}
+            justifyContent="center"
+            alignItems="center"
+            display="flex"
+          >
+            <ProductCard />
+          </Grid>
+          <Grid
+            item
+            lg={4}
+            md={6}
+            xs={12}
+            sm={12}
+            justifyContent="center"
+            alignItems="center"
+            display="flex"
+          >
             <ProductCard />
           </Grid>
         </Grid>
