@@ -6,13 +6,11 @@ import {
   Typography,
   IconButton,
   Rating,
-  ToggleButton,
-  ToggleButtonGroup,
+  Button,
 } from "@mui/material";
 import { makeStyles } from "@mui/styles";
 import { Box } from "@mui/system";
-import React, { Children, useState } from "react";
-import { BsHandbagFill } from "react-icons/bs";
+import React, { useState } from "react";
 import { FaShoppingCart } from "react-icons/fa";
 import tshirt1 from "../assets/tshirt1.png";
 import tshirt2 from "../assets/tshirt2.png";
@@ -26,34 +24,15 @@ const useStyles = makeStyles({
 });
 
 const ProductImage = [tshirt1, tshirt2, tshirt3];
+const ProductColors = ["#00d9ff", "#ff6b01", "#fdc20c", "#AB9160"];
+const ProductSize = [37, 38, 39, 40, 41, 42];
 const RightDetailCard = () => {
   const [value, setValue] = React.useState(2);
-  const [colorValue, setColorValue] = React.useState(0);
-
-  const handleColorValueChange = (colorValue, newColorValue) => {
-    setColorValue(newColorValue);
-  };
-
-  const control = {
-    value: colorValue,
-    onChange: handleColorValueChange,
-    exclusive: true,
-  };
-
-  const colorChildren = [
-    <ToggleButton>
-      <Box
-        color="red"
-        sx={{
-          border: "1px solid #fff",
-          borderRadius: "50%",
-        }}
-      ></Box>
-    </ToggleButton>,
-  ];
+  const [colorValue, setColorValue] = React.useState(ProductColors[0]);
+  const [sizeValue, setSizeValue] = React.useState(ProductSize[0]);
 
   return (
-    <Grid container>
+    <Grid container rowSpacing={4}>
       <Grid item lg={12} md={12} xs={12} sm={12}>
         <Box
           sx={{
@@ -93,7 +72,15 @@ const RightDetailCard = () => {
           </Typography>
         </Box>
       </Grid>
-      <Grid item lg={12} md={12} xs={12} sm={12}>
+      <Grid
+        item
+        lg={12}
+        md={12}
+        xs={12}
+        sm={12}
+        justifyContent="center"
+        display="flex"
+      >
         <Box
           sx={{
             display: "flex",
@@ -110,7 +97,125 @@ const RightDetailCard = () => {
           >
             Color:
           </Typography>
-          <ToggleButtonGroup>{colorChildren}</ToggleButtonGroup>
+          <Box
+            sx={{
+              display: "flex",
+
+              alignItems: "center",
+              flexDirection: "row",
+            }}
+          >
+            {ProductColors.map((color, index) => (
+              <Card
+                key={index}
+                sx={{
+                  backgroundColor: `${color}`,
+                  ml: 2,
+                  cursor: "pointer",
+                  filter: `drop-shadow(2px 2px 7px ${color})`,
+                  border: colorValue === color ? "3px solid #fff" : "none",
+                  borderRadius: "50%",
+                  width: "40px",
+                  height: "40px",
+                }}
+                onClick={() => setColorValue(color)}
+              ></Card>
+            ))}
+          </Box>
+        </Box>
+      </Grid>
+      <Grid
+        item
+        lg={12}
+        md={12}
+        xs={12}
+        sm={12}
+        justifyContent="center"
+        display="flex"
+      >
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: "center",
+          }}
+        >
+          <Typography
+            fontWeight="bold"
+            fontSize="1.2rem"
+            fontFamily="Roboto"
+            variant="subtitle1"
+          >
+            Size:&nbsp;
+          </Typography>
+          <Grid
+            container
+            justifyContent="center"
+            display="flex"
+            columnSpacing={-20}
+          >
+            {ProductSize.map((size, index) => (
+              <Grid key={index} item lg={4} md={4} sm={4} xs={4}>
+                <Card
+                  sx={{
+                    borderRadius: "15px",
+                    width: "60px",
+                    mt: 1,
+                    height: "40px",
+                    boxShadow:
+                      sizeValue === size
+                        ? "none"
+                        : "0px 0px 18px 0px #fff inset",
+                    backgroundColor: sizeValue === size ? "#FDC20C" : "#ffe0b2",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    display: "flex",
+                  }}
+                  onClick={() => setSizeValue(size)}
+                >
+                  <Typography
+                    fontWeight="bold"
+                    fontSize="1.2rem"
+                    fontFamily="Ubuntu"
+                    variant="subtitle1"
+                    sx={{
+                      cursor: "pointer",
+                    }}
+                  >
+                    {size}
+                  </Typography>
+                </Card>
+              </Grid>
+            ))}
+          </Grid>
+        </Box>
+      </Grid>
+      <Grid item lg={12} md={12} xs={12} sm={12}>
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: "center",
+          }}
+        >
+          <Button
+            sx={{
+              backgroundColor: "#000000",
+              borderRadius: "25px",
+              color: "#FDC20C",
+              textTransform: "none",
+              height: "70px",
+              width: "180px",
+              cursor: "pointer",
+              "&:hover": {
+                backgroundColor: "gray",
+                borderColor: "#fff",
+                color: "#fff",
+              },
+            }}
+          >
+            <Typography fontFamily="Ubuntu" variant="subtitle1">
+              Add to cart
+            </Typography>
+          </Button>
         </Box>
       </Grid>
     </Grid>
@@ -125,7 +230,7 @@ const DetailCard = () => {
       elevation={10}
       sx={{
         py: "40px",
-        px: "10px",
+        px: 2,
         width: "80%",
         border: "1px solid #fff",
         borderRadius: "30px",
@@ -142,7 +247,7 @@ const DetailCard = () => {
         >
           <Grid
             lg={4}
-            md={4}
+            md={12}
             justifyContent="center"
             alignItems="center"
             display="flex"
@@ -192,6 +297,7 @@ const DetailCard = () => {
                     sm={4}
                     justifyContent="center"
                     display="flex"
+                    paddingRight={1}
                   >
                     <Card
                       elevation={0}
@@ -217,7 +323,7 @@ const DetailCard = () => {
           </Grid>
           <Grid
             lg={4}
-            md={4}
+            md={12}
             justifyContent="center"
             alignItems="center"
             display="flex"
@@ -246,7 +352,7 @@ const DetailCard = () => {
           </Grid>
           <Grid
             lg={4}
-            md={4}
+            md={12}
             justifyContent="center"
             alignItems="center"
             display="flex"

@@ -69,7 +69,40 @@
           </Typography>
 
 
-
+<Grid conatiner>
+            {ProductSize.map((size, index) => (
+              <Grid item lg={4} md={4} xs={4} sm={4} key={index}>
+                <Card
+                  sx={{
+                    borderRadius: "15px",
+                    width: "60px",
+                    height: "40px",
+                    boxShadow:
+                      sizeValue === size
+                        ? "none"
+                        : "0px 0px 18px 0px #fff inset",
+                    backgroundColor: sizeValue === size ? "#FDC20C" : "#ffe0b2",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    display: "flex",
+                  }}
+                  onClick={() => setSizeValue(size)}
+                >
+                  <Typography
+                    fontWeight="bold"
+                    fontSize="1.2rem"
+                    fontFamily="Ubuntu"
+                    variant="subtitle1"
+                    sx={{
+                      cursor: "pointer",
+                    }}
+                  >
+                    {size}
+                  </Typography>
+                </Card>
+              </Grid>
+            ))}
+          </Grid>
 
           <Typography
             variant="h6"
