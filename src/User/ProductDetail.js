@@ -16,6 +16,7 @@ import tshirt1 from "../assets/tshirt1.png";
 import tshirt2 from "../assets/tshirt2.png";
 import tshirt3 from "../assets/tshirt3.png";
 import Base from "../first/Base";
+import ProductCard from "./ProductCard";
 
 const useStyles = makeStyles({
   root: {
@@ -147,14 +148,18 @@ const RightDetailCard = () => {
           >
             Size:&nbsp;
           </Typography>
-          <Grid
-            container
-            justifyContent="center"
-            display="flex"
-            columnSpacing={-20}
-          >
+          <Grid container display="flex">
             {ProductSize.map((size, index) => (
-              <Grid key={index} item lg={4} md={4} sm={4} xs={4}>
+              <Grid
+                key={index}
+                item
+                lg={4}
+                md={4}
+                sm={4}
+                xs={4}
+                display="flex"
+                justifyContent="space-around"
+              >
                 <Card
                   sx={{
                     borderRadius: "15px",
@@ -235,6 +240,7 @@ const DetailCard = () => {
         border: "1px solid #fff",
         borderRadius: "30px",
         boxShadow: "0px 0px 50px 5px #fff inset",
+        filter: "drop-shadow(0px 10px 15px gray)",
         backgroundColor: "#ffe0b2",
       }}
     >
@@ -311,6 +317,7 @@ const DetailCard = () => {
                         display: "flex",
                         backgroundColor:
                           selectedImage === image ? "#fdc20b" : "#fff0da",
+                        cursor: "pointer",
                       }}
                       onClick={() => setSelectedImage(image)}
                     >
@@ -337,6 +344,11 @@ const DetailCard = () => {
                 alignItems: "center",
                 display: "flex",
                 borderRadius: "50%",
+                flexDirection: "column",
+                boxShadow: "0px 0px 50px 5px #fff inset",
+                backgroundColor: "#ffe0b2",
+                border: "1px solid #fff",
+                p: 2,
               }}
             >
               <Box
@@ -348,6 +360,17 @@ const DetailCard = () => {
                 }}
                 width="200px"
               />
+              <Typography
+                variant="h4"
+                sx={{
+                  pt: 1,
+                  color: "#6a60a0",
+                  //fontSize: "2.0rem",
+                  fontWeight: "bold",
+                }}
+              >
+                ₹229.99
+              </Typography>
             </Card>
           </Grid>
           <Grid
@@ -453,6 +476,116 @@ const ProductDetail = () => {
       >
         <DetailCard />
       </Box>
+      <Container maxWidth="xl">
+        <Grid
+          sx={{
+            position: "relative",
+            top: "-180px",
+          }}
+          container
+          justifyContent="center"
+          alignItems="center"
+          display="flex"
+          spacing={8}
+        >
+          <Grid
+            item
+            lg={4}
+            md={6}
+            xs={12}
+            sm={12}
+            justifyContent="center"
+            alignItems="center"
+            display="flex"
+          >
+            <ProductCard
+              prodImg={tshirt1}
+              prodLabel="Legends Tshirt Wolf Sharingan"
+              prodPrice="429.99"
+            />
+          </Grid>
+          <Grid
+            item
+            lg={4}
+            md={6}
+            xs={12}
+            sm={12}
+            justifyContent="center"
+            alignItems="center"
+            display="flex"
+          >
+            <ProductCard
+              prodImg={tshirt3}
+              prodLabel="Legends Tshirt Wolf Sharingan"
+              prodPrice="429.99"
+            />
+          </Grid>
+          <Grid
+            item
+            lg={4}
+            md={6}
+            xs={12}
+            sm={12}
+            justifyContent="center"
+            alignItems="center"
+            display="flex"
+          >
+            <ProductCard
+              prodImg={tshirt2}
+              prodLabel="Legends Tshirt Wolf Sharingan"
+              prodPrice="429.99"
+            />
+          </Grid>
+          <Grid
+            item
+            lg={4}
+            md={6}
+            xs={12}
+            sm={12}
+            justifyContent="center"
+            alignItems="center"
+            display="flex"
+          >
+            <ProductCard
+              prodImg={tshirt3}
+              prodLabel="Legends Tshirt Wolf Sharingan"
+              prodPrice="429.99"
+            />
+          </Grid>
+          <Grid
+            item
+            lg={4}
+            md={6}
+            xs={12}
+            sm={12}
+            justifyContent="center"
+            alignItems="center"
+            display="flex"
+          >
+            <ProductCard
+              prodImg={tshirt1}
+              prodLabel="Legends Tshirt Wolf Sharingan"
+              prodPrice="429.99"
+            />
+          </Grid>
+          <Grid
+            item
+            lg={4}
+            md={6}
+            xs={12}
+            sm={12}
+            justifyContent="center"
+            alignItems="center"
+            display="flex"
+          >
+            <ProductCard
+              prodImg={tshirt1}
+              prodLabel="Legends Tshirt Wolf Sharingan"
+              prodPrice="429.99"
+            />
+          </Grid>
+        </Grid>
+      </Container>
     </Base>
   );
 };
