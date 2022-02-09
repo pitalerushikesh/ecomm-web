@@ -1,12 +1,12 @@
 import { Box, Grid, Typography, Container, IconButton } from "@mui/material";
 import { makeStyles } from "@mui/styles";
 import React from "react";
-import { AiOutlineFullscreen } from "react-icons/ai";
-import { BsHandbagFill } from "react-icons/bs";
 import { FaShoppingCart } from "react-icons/fa";
 import Base from "../first/Base";
 import ProductCard from "./ProductCard";
-
+import tshirt1 from "../assets/tshirt1.png";
+import tshirt2 from "../assets/tshirt2.png";
+import tshirt3 from "../assets/tshirt3.png";
 const useStyles = makeStyles({
   root: {
     backgroundColor: "#ffebc2",

@@ -2,14 +2,13 @@ import React from "react";
 import { Card, CardContent, Grid, Typography, Box } from "@mui/material";
 import { AiOutlineFullscreen } from "react-icons/ai";
 import { BsHandbagFill } from "react-icons/bs";
-import tshirt1 from "../assets/tshirt1.png";
+
 const ProductCard = ({ prodImg, prodLabel, prodPrice }) => {
   return (
     <Card
       sx={{
         maxWidth: "383px",
         minWidth: "383px",
-
         border: "1px solid #fff",
         borderRadius: "30px",
         boxShadow: "0px 0px 50px 5px #fff inset",

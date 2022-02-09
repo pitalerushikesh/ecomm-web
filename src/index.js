@@ -1,7 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import "./App.css";
-
 import "./user/css/Homepage.css";
 import Router from "./Router";
 
