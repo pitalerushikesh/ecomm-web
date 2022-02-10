@@ -8,9 +8,9 @@ import { addDoc, collection } from "firebase/firestore";
 import ImagePreview from "../components/ImagePreview";
 import axios from "axios";
 
-const Input = styled("input")({
-  display: "none",
-});
+// const Input = styled("input")({
+//   display: "none",
+// });
 
 const AddProduct = () => {
   const [loading, setLoading] = useState(false);
@@ -24,7 +24,7 @@ const AddProduct = () => {
     prodPrice: "",
   });
 
-  const { prodName, prodPrice, imgUrl } = state;
+  const { prodName, prodPrice } = state;
 
   const handleChange = (e) => (event) => {
     setState({
@@ -34,15 +34,19 @@ const AddProduct = () => {
     });
   };
 
-  const onSubmit = async (e) => {
+  const onSubmit = async ({ e, imgUrl }) => {
     e.preventDefault();
     console.log("Im in");
+    console.log(imgUrl);
     try {
       await addDoc(collection(firebase, "Products"), {
         prodName: prodName,
         prodPrice: prodPrice,
         imgUrl: imgUrl,
-      }).then(() => setState({ prodName: "", prodPrice: "" }));
+      }).then(() => {
+        setState({ prodName: "", prodPrice: "" });
+        setLoading(false);
+      });
       console.log("Im in 2");
     } catch (error) {
       console.log("Error adding document : ", error);
@@ -59,6 +63,7 @@ const AddProduct = () => {
     "https://api.imgbb.com/1/upload?key=3647b0520ccf7b47e53971529e0ef9ff";
 
   const postImageData = async (e) => {
+    setLoading(true);
     let formData = new FormData();
     formData.append("image", image);
     let options = {
@@ -71,8 +76,19 @@ const AddProduct = () => {
       },
       data: formData,
     };
-    let res = await axios(options);
-    console.log(res.data.data.url);
+    let res = await axios(options).then((res) => {
+      let imageUrl = res.data.data.url;
+      console.log(res.data.data.url);
+      if (imageUrl.length != 0) {
+        console.log("Url Added", imageUrl);
+
+        onSubmit({ e, imgUrl: imageUrl });
+        setLoading(false);
+      } else {
+        console.log("Url Not Added");
+        setLoading(false);
+      }
+    });
   };
 
   return (
@@ -113,7 +129,14 @@ const AddProduct = () => {
         >
           <TextField
             label="Price"
+            type="number"
             value={prodPrice}
+            sx={{
+              WebkitAppearance: "none",
+              MozAppearance: "none",
+              appearance: "none",
+              margin: "0",
+            }}
             onChange={handleChange("prodPrice")}
           />
         </Grid>
@@ -159,7 +182,13 @@ const AddProduct = () => {
           alignItems="center"
           display="flex"
         >
-          <Button onClick={postImageData}>Add</Button>
+          <LoadingButton
+            loading={loading}
+            variant="contained"
+            onClick={postImageData}
+          >
+            Add
+          </LoadingButton>
         </Grid>
       </Grid>
     </Box>
