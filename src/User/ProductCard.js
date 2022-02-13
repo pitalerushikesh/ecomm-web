@@ -3,9 +3,11 @@ import { Card, CardContent, Grid, Typography, Box } from "@mui/material";
 import { AiOutlineFullscreen } from "react-icons/ai";
 import { BsHandbagFill } from "react-icons/bs";
 
-const ProductCard = ({ prodImg, prodLabel, prodPrice }) => {
+const ProductCard = ({ prodImg, prodLabel, prodPrice, key, id }) => {
   return (
     <Card
+      key={key}
+      id={id}
       sx={{
         maxWidth: "383px",
         minWidth: "383px",

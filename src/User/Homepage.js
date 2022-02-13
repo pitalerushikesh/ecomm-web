@@ -1,12 +1,12 @@
 import { Box, Grid, Typography, Container, IconButton } from "@mui/material";
 import { makeStyles } from "@mui/styles";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { FaShoppingCart } from "react-icons/fa";
 import Base from "../first/Base";
 import ProductCard from "./ProductCard";
-import tshirt1 from "../assets/tshirt1.png";
-import tshirt2 from "../assets/tshirt2.png";
-import tshirt3 from "../assets/tshirt3.png";
+import { collection, getDocs } from "firebase/firestore";
+import firebase from "../first/Firebase";
+
 const useStyles = makeStyles({
   root: {
     backgroundColor: "#ffebc2",
@@ -15,6 +15,23 @@ const useStyles = makeStyles({
 
 const Homepage = () => {
   const classes = useStyles();
+
+  const queryProducts = async () =>
+    await getDocs(collection(firebase, "Products"));
+
+  const [products, setProducts] = useState([]);
+
+  useEffect(() => {
+    const _fetchData = async () => {
+      const _products = await getDocs(collection(firebase, "Products"));
+
+      setProducts(_products.docs.map((doc) => doc.data()));
+    };
+    _fetchData();
+    queryProducts();
+    return () => {};
+  }, []);
+
   return (
     <Base className={classes.root}>
       <Box
@@ -103,7 +120,18 @@ const Homepage = () => {
           display="flex"
           spacing={8}
         >
-          <Grid
+          {products.map((doc) => {
+            return (
+              <Grid item lg={4} md={4} sm={6} xs={12}>
+                <ProductCard
+                  prodLabel={doc["prodName"]}
+                  prodPrice={doc.prodPrice}
+                  prodImg={doc.imgUrl}
+                />
+              </Grid>
+            );
+          })}
+          {/* <Grid
             item
             lg={4}
             md={6}
@@ -114,67 +142,7 @@ const Homepage = () => {
             display="flex"
           >
             <ProductCard />
-          </Grid>
-          <Grid
-            item
-            lg={4}
-            md={6}
-            xs={12}
-            sm={12}
-            justifyContent="center"
-            alignItems="center"
-            display="flex"
-          >
-            <ProductCard />
-          </Grid>
-          <Grid
-            item
-            lg={4}
-            md={6}
-            xs={12}
-            sm={12}
-            justifyContent="center"
-            alignItems="center"
-            display="flex"
-          >
-            <ProductCard />
-          </Grid>
-          <Grid
-            item
-            lg={4}
-            md={6}
-            xs={12}
-            sm={12}
-            justifyContent="center"
-            alignItems="center"
-            display="flex"
-          >
-            <ProductCard />
-          </Grid>
-          <Grid
-            item
-            lg={4}
-            md={6}
-            xs={12}
-            sm={12}
-            justifyContent="center"
-            alignItems="center"
-            display="flex"
-          >
-            <ProductCard />
-          </Grid>
-          <Grid
-            item
-            lg={4}
-            md={6}
-            xs={12}
-            sm={12}
-            justifyContent="center"
-            alignItems="center"
-            display="flex"
-          >
-            <ProductCard />
-          </Grid>
+          </Grid> */}
         </Grid>
       </Container>
     </Base>
