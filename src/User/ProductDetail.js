@@ -396,16 +396,17 @@ const DetailCard = ({ prod_label, prod_price, prod_img }) => {
 const ProductDetail = ({ prodLabel, prodImg, prodPrice }) => {
   const classes = useStyles();
   const [product, setProduct] = useState([]);
-  // const navigate = useNavigate();
-  // const [products, setProducts] = useState([]);
-  // const _fetchData = async () => {
-  //   const _products = await getDocs(collection(firebase, "Products"));
-  //   setProducts(_products.docs.map((doc) => doc.data()));
-  // };
-  // useEffect(() => {
-  //   _fetchData();
-  // }, []);
+  const navigate = useNavigate();
+  const [products, setProducts] = useState([]);
+  const _fetchData = async () => {
+    const _products = await getDocs(collection(firebase, "Products"));
+    setProducts(_products.docs.map((doc) => doc.data()));
+  };
   useEffect(() => {
+    _fetchData();
+  }, []);
+  useEffect(() => {
+    window.scrollTo(0, 0);
     const _product = JSON.parse(localStorage.getItem("product"));
     setProduct(_product);
   }, []);
@@ -500,7 +501,7 @@ const ProductDetail = ({ prodLabel, prodImg, prodPrice }) => {
           prod_price={product.prodPrice}
         />
       </Box>
-      {/* <Container maxWidth="xl">
+      <Container maxWidth="xl">
         <Grid
           sx={{
             position: "relative",
@@ -544,9 +545,9 @@ const ProductDetail = ({ prodLabel, prodImg, prodPrice }) => {
             display="flex"
           >
             <ProductCard />
-          </Grid> 
+          </Grid>
         </Grid>
-      </Container> */}
+      </Container>
     </Base>
   );
 };

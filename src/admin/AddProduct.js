@@ -63,10 +63,15 @@ const AddProduct = () => {
     "https://api.imgbb.com/1/upload?key=3647b0520ccf7b47e53971529e0ef9ff";
 
   const postImageData = async (e) => {
+    e.preventDefault();
     setLoading(true);
+    var file = image;
+    console.log("File : ", file);
+    var newFileName = file.name + Date.now();
+    console.log("FileName : ", newFileName);
     let formData = new FormData();
 
-    formData.append("image", image, image.name + "-" + Date.now() + ".png");
+    formData.append("image", image, newFileName);
 
     let options = {
       method: "POST",
@@ -90,14 +95,20 @@ const AddProduct = () => {
 
           onSubmit({ e, imgUrl: imageUrl });
           setLoading(false);
+          handleImage(null);
+          formData = null;
         } else {
           console.log("Url Not Added");
           setLoading(false);
+          handleImage(null);
+          formData = null;
         }
       });
     } catch (error) {
       console.log(error);
       setLoading(false);
+      handleImage(null);
+      formData = null;
     }
   };
 

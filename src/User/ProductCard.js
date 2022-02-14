@@ -15,8 +15,9 @@ const ProductCard = ({ prodImg, prodLabel, prodPrice, key, id }) => {
         borderRadius: "30px",
         boxShadow: "0px 0px 50px 5px #fff inset",
         backgroundColor: "#ffe0b2",
+        cursor: "pointer",
         "&:hover": {
-          boxShadow: "5px 5px 50px 5px #fff",
+          boxShadow: "5px 5px 50px 5px gray, 0px 0px 50px 5px #fff inset",
         },
       }}
     >
