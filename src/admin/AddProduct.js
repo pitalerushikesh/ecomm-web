@@ -2,7 +2,7 @@ import { Button, Grid, styled, TextField } from "@mui/material";
 import { Box } from "@mui/system";
 import React, { useRef, useState } from "react";
 import { FiUpload } from "react-icons/fi";
-import { LoadingButton } from "@mui/lab";
+import { DateTimePicker, LoadingButton } from "@mui/lab";
 import firebase from "../first/Firebase";
 import { addDoc, collection } from "firebase/firestore";
 import ImagePreview from "../components/ImagePreview";
@@ -65,7 +65,9 @@ const AddProduct = () => {
   const postImageData = async (e) => {
     setLoading(true);
     let formData = new FormData();
-    formData.append("image", image);
+
+    formData.append("image", image, image.name + "-" + Date.now() + ".png");
+
     let options = {
       method: "POST",
       url: url,
@@ -76,19 +78,27 @@ const AddProduct = () => {
       },
       data: formData,
     };
-    let res = await axios(options).then((res) => {
-      let imageUrl = res.data.data.url;
-      console.log(res.data.data.url);
-      if (imageUrl.length != 0) {
-        console.log("Url Added", imageUrl);
+    try {
+      let res = await axios(options).then((res) => {
+        let _filename = res.data.data.image.filename;
+        console.log(_filename);
+        let imageUrl = res.data.data.url;
+        console.log(res.data);
+        console.log(res.data.data.url);
+        if (imageUrl.length != 0) {
+          console.log("Url Added", imageUrl);
 
-        onSubmit({ e, imgUrl: imageUrl });
-        setLoading(false);
-      } else {
-        console.log("Url Not Added");
-        setLoading(false);
-      }
-    });
+          onSubmit({ e, imgUrl: imageUrl });
+          setLoading(false);
+        } else {
+          console.log("Url Not Added");
+          setLoading(false);
+        }
+      });
+    } catch (error) {
+      console.log(error);
+      setLoading(false);
+    }
   };
 
   return (

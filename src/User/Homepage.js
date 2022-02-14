@@ -1,4 +1,11 @@
-import { Box, Grid, Typography, Container, IconButton } from "@mui/material";
+import {
+  Box,
+  Grid,
+  Typography,
+  Container,
+  IconButton,
+  Link,
+} from "@mui/material";
 import { makeStyles } from "@mui/styles";
 import React, { useEffect, useState } from "react";
 import { FaShoppingCart } from "react-icons/fa";
@@ -6,6 +13,7 @@ import Base from "../first/Base";
 import ProductCard from "./ProductCard";
 import { collection, getDocs } from "firebase/firestore";
 import firebase from "../first/Firebase";
+import { useNavigate } from "react-router-dom";
 
 const useStyles = makeStyles({
   root: {
@@ -15,21 +23,14 @@ const useStyles = makeStyles({
 
 const Homepage = () => {
   const classes = useStyles();
-
-  const queryProducts = async () =>
-    await getDocs(collection(firebase, "Products"));
-
+  const navigate = useNavigate();
   const [products, setProducts] = useState([]);
-
+  const _fetchData = async () => {
+    const _products = await getDocs(collection(firebase, "Products"));
+    setProducts(_products.docs.map((doc) => doc.data()));
+  };
   useEffect(() => {
-    const _fetchData = async () => {
-      const _products = await getDocs(collection(firebase, "Products"));
-
-      setProducts(_products.docs.map((doc) => doc.data()));
-    };
     _fetchData();
-    queryProducts();
-    return () => {};
   }, []);
 
   return (
@@ -94,6 +95,7 @@ const Homepage = () => {
             sx={{
               justifyContent: "flex-end",
               display: { xs: "none", sm: "none", md: "flex" },
+              alignItems: "start",
             }}
           >
             <IconButton
@@ -123,11 +125,21 @@ const Homepage = () => {
           {products.map((doc) => {
             return (
               <Grid item lg={4} md={4} sm={6} xs={12}>
-                <ProductCard
-                  prodLabel={doc["prodName"]}
-                  prodPrice={doc.prodPrice}
-                  prodImg={doc.imgUrl}
-                />
+                <Link
+                  rel="noopener noreferrer"
+                  target="_blank"
+                  underline="none"
+                  onClick={() => {
+                    localStorage.setItem("product", JSON.stringify(doc));
+                    navigate("/productDetail");
+                  }}
+                >
+                  <ProductCard
+                    prodLabel={doc["prodName"]}
+                    prodPrice={doc.prodPrice}
+                    prodImg={doc.imgUrl}
+                  />
+                </Link>
               </Grid>
             );
           })}

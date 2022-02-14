@@ -7,15 +7,20 @@ import {
   IconButton,
   Rating,
   Button,
+  Link,
 } from "@mui/material";
 import { makeStyles } from "@mui/styles";
 import { Box } from "@mui/system";
-import React, { useState } from "react";
+import { collection, getDocs } from "firebase/firestore";
+import React, { useEffect, useState } from "react";
 import { FaShoppingCart } from "react-icons/fa";
+import { useNavigate } from "react-router-dom";
+
 import tshirt1 from "../assets/tshirt1.png";
 import tshirt2 from "../assets/tshirt2.png";
 import tshirt3 from "../assets/tshirt3.png";
 import Base from "../first/Base";
+import firebase from "../first/Firebase";
 import ProductCard from "./ProductCard";
 
 const useStyles = makeStyles({
@@ -146,7 +151,7 @@ const RightDetailCard = () => {
             fontFamily="Roboto"
             variant="subtitle1"
           >
-            Size:&nbsp;
+            Size:
           </Typography>
           <Grid container display="flex">
             {ProductSize.map((size, index) => (
@@ -227,7 +232,7 @@ const RightDetailCard = () => {
   );
 };
 
-const DetailCard = () => {
+const DetailCard = ({ prod_label, prod_price, prod_img }) => {
   const [selectedImage, setSelectedImage] = useState(ProductImage[0]);
 
   return (
@@ -267,7 +272,7 @@ const DetailCard = () => {
                 fontWeight: "bold",
               }}
             >
-              Legends Tshirt Wolf Sharingan
+              {prod_label}
             </Typography>
             <Typography
               variant="h6"
@@ -354,7 +359,7 @@ const DetailCard = () => {
               <Box
                 component="img"
                 className="prod-img"
-                src={selectedImage}
+                src={prod_img}
                 sx={{
                   filter: "drop-shadow(5px 0px 40px #fdae1f)",
                 }}
@@ -369,7 +374,7 @@ const DetailCard = () => {
                   fontWeight: "bold",
                 }}
               >
-                ₹229.99
+                ₹{prod_price}
               </Typography>
             </Card>
           </Grid>
@@ -388,8 +393,23 @@ const DetailCard = () => {
   );
 };
 
-const ProductDetail = () => {
+const ProductDetail = ({ prodLabel, prodImg, prodPrice }) => {
   const classes = useStyles();
+  const [product, setProduct] = useState([]);
+  // const navigate = useNavigate();
+  // const [products, setProducts] = useState([]);
+  // const _fetchData = async () => {
+  //   const _products = await getDocs(collection(firebase, "Products"));
+  //   setProducts(_products.docs.map((doc) => doc.data()));
+  // };
+  // useEffect(() => {
+  //   _fetchData();
+  // }, []);
+  useEffect(() => {
+    const _product = JSON.parse(localStorage.getItem("product"));
+    setProduct(_product);
+  }, []);
+
   return (
     <Base className={classes.root}>
       <Box
@@ -452,12 +472,12 @@ const ProductDetail = () => {
             sx={{
               justifyContent: "flex-end",
               display: { xs: "none", sm: "none", md: "flex" },
+              alignItems: "start",
             }}
           >
             <IconButton
               sx={{
                 color: "#000",
-                alignItems: "start",
               }}
               size="small"
             >
@@ -474,13 +494,17 @@ const ProductDetail = () => {
           top: "-300px",
         }}
       >
-        <DetailCard />
+        <DetailCard
+          prod_img={product.imgUrl}
+          prod_label={product.prodName}
+          prod_price={product.prodPrice}
+        />
       </Box>
-      <Container maxWidth="xl">
+      {/* <Container maxWidth="xl">
         <Grid
           sx={{
             position: "relative",
-            top: "-180px",
+            top: "-200px",
           }}
           container
           justifyContent="center"
@@ -488,6 +512,27 @@ const ProductDetail = () => {
           display="flex"
           spacing={8}
         >
+          {products.map((doc) => {
+            return (
+              <Grid item lg={4} md={4} sm={6} xs={12}>
+                <Link
+                  rel="noopener noreferrer"
+                  target="_blank"
+                  underline="none"
+                  onClick={() => {
+                    localStorage.setItem("product", JSON.stringify(doc));
+                    navigate("/productDetail");
+                  }}
+                >
+                  <ProductCard
+                    prodLabel={doc["prodName"]}
+                    prodPrice={doc.prodPrice}
+                    prodImg={doc.imgUrl}
+                  />
+                </Link>
+              </Grid>
+            );
+          })}
           <Grid
             item
             lg={4}
@@ -498,94 +543,10 @@ const ProductDetail = () => {
             alignItems="center"
             display="flex"
           >
-            <ProductCard
-              prodImg={tshirt1}
-              prodLabel="Legends Tshirt Wolf Sharingan"
-              prodPrice="429.99"
-            />
-          </Grid>
-          <Grid
-            item
-            lg={4}
-            md={6}
-            xs={12}
-            sm={12}
-            justifyContent="center"
-            alignItems="center"
-            display="flex"
-          >
-            <ProductCard
-              prodImg={tshirt3}
-              prodLabel="Legends Tshirt Wolf Sharingan"
-              prodPrice="429.99"
-            />
-          </Grid>
-          <Grid
-            item
-            lg={4}
-            md={6}
-            xs={12}
-            sm={12}
-            justifyContent="center"
-            alignItems="center"
-            display="flex"
-          >
-            <ProductCard
-              prodImg={tshirt2}
-              prodLabel="Legends Tshirt Wolf Sharingan"
-              prodPrice="429.99"
-            />
-          </Grid>
-          <Grid
-            item
-            lg={4}
-            md={6}
-            xs={12}
-            sm={12}
-            justifyContent="center"
-            alignItems="center"
-            display="flex"
-          >
-            <ProductCard
-              prodImg={tshirt3}
-              prodLabel="Legends Tshirt Wolf Sharingan"
-              prodPrice="429.99"
-            />
-          </Grid>
-          <Grid
-            item
-            lg={4}
-            md={6}
-            xs={12}
-            sm={12}
-            justifyContent="center"
-            alignItems="center"
-            display="flex"
-          >
-            <ProductCard
-              prodImg={tshirt1}
-              prodLabel="Legends Tshirt Wolf Sharingan"
-              prodPrice="429.99"
-            />
-          </Grid>
-          <Grid
-            item
-            lg={4}
-            md={6}
-            xs={12}
-            sm={12}
-            justifyContent="center"
-            alignItems="center"
-            display="flex"
-          >
-            <ProductCard
-              prodImg={tshirt1}
-              prodLabel="Legends Tshirt Wolf Sharingan"
-              prodPrice="429.99"
-            />
-          </Grid>
+            <ProductCard />
+          </Grid> 
         </Grid>
-      </Container>
+      </Container> */}
     </Base>
   );
 };
