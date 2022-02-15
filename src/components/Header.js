@@ -1,8 +1,11 @@
 import React from "react";
 import { Box, Grid, Typography, IconButton } from "@mui/material";
 import { FaShoppingCart } from "react-icons/fa";
+import { useSelector } from "react-redux";
 
 const Header = () => {
+  const { cartItems } = useSelector((state) => state.CartReducer);
+
   return (
     <Box
       sx={{
@@ -75,6 +78,7 @@ const Header = () => {
             size="small"
           >
             <FaShoppingCart />
+            {cartItems.length}
           </IconButton>
         </Grid>
       </Grid>

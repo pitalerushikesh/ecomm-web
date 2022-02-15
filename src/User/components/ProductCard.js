@@ -1,16 +1,31 @@
 import React from "react";
-import { Card, CardContent, Grid, Typography, Box } from "@mui/material";
+import {
+  Card,
+  CardContent,
+  Grid,
+  Typography,
+  Box,
+  IconButton,
+} from "@mui/material";
 import { AiOutlineFullscreen } from "react-icons/ai";
 import { BsHandbagFill } from "react-icons/bs";
 
-const ProductCard = ({ prodImg, prodLabel, prodPrice, key, id }) => {
+const ProductCard = ({
+  prodImg,
+  prodLabel,
+  prodPrice,
+  key,
+  id,
+  onCardClick,
+  onClick,
+}) => {
   return (
     <Card
       key={key}
       id={id}
       sx={{
-        maxWidth: "383px",
-        minWidth: "383px",
+        // maxWidth: "383px",
+        minWidth: "350px",
         border: "1px solid #fff",
         borderRadius: "30px",
         boxShadow: "0px 0px 50px 5px #fff inset",
@@ -44,7 +59,19 @@ const ProductCard = ({ prodImg, prodLabel, prodPrice, key, id }) => {
             alignItems="center"
             display="flex"
           >
-            <BsHandbagFill />
+            <IconButton
+              size="small"
+              sx={{
+                color: "#000",
+                "&:hover": {
+                  color: "#fff",
+                  backgroundColor: "#000",
+                },
+              }}
+              onClick={onClick}
+            >
+              <BsHandbagFill />
+            </IconButton>
           </Grid>
         </Grid>
         <Grid container>
@@ -70,6 +97,7 @@ const ProductCard = ({ prodImg, prodLabel, prodPrice, key, id }) => {
           </Grid>
         </Grid>
         <Box
+          onClick={onCardClick}
           sx={{
             pt: "6px",
             alignItems: "center",

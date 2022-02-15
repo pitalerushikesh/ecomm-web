@@ -19,7 +19,7 @@ import tshirt3 from "../assets/tshirt3.png";
 import Header from "../components/Header";
 import Base from "../first/Base";
 import firebase from "../first/Firebase";
-import ProductCard from "./ProductCard";
+import ProductCard from "./components/ProductCard";
 
 const useStyles = makeStyles({
   root: {

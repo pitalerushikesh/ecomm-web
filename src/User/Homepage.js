@@ -1,13 +1,13 @@
-import { Grid, Container, Link } from "@mui/material";
+import { Grid, Box, Link } from "@mui/material";
 import { makeStyles } from "@mui/styles";
 import React, { useEffect, useState } from "react";
 import Base from "../first/Base";
-import ProductCard from "./ProductCard";
+import ProductCard from "./components/ProductCard";
 import { collection, getDocs } from "firebase/firestore";
 import firebase from "../first/Firebase";
 import { useNavigate } from "react-router-dom";
 import Header from "../components/Header";
-
+import { useDispatch, useSelector } from "react-redux";
 const useStyles = makeStyles({
   root: {
     backgroundColor: "#ffebc2",
@@ -16,6 +16,8 @@ const useStyles = makeStyles({
 
 const Homepage = () => {
   const classes = useStyles();
+  const { cartItems } = useSelector((state) => state.CartReducer);
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   const [products, setProducts] = useState([]);
   const _fetchData = async () => {
@@ -26,10 +28,18 @@ const Homepage = () => {
     _fetchData();
   }, []);
 
+  useEffect(() => {
+    localStorage.setItem("cartItems", JSON.stringify(cartItems));
+  }, [cartItems]);
+
+  const addToCart = (product) => {
+    dispatch({ type: "ADD_TO_CART", payload: product });
+  };
+
   return (
     <Base className={classes.root}>
       <Header />
-      <Container maxWidth="xl">
+      <Box justifyContent="center" alignItems="center" display="flex">
         <Grid
           sx={{
             position: "relative",
@@ -39,26 +49,31 @@ const Homepage = () => {
           justifyContent="center"
           alignItems="center"
           display="flex"
-          spacing={8}
+          rowSpacing={8}
         >
           {products.map((doc) => {
             return (
-              <Grid item lg={4} md={4} sm={6} xs={12}>
-                <Link
-                  rel="noopener noreferrer"
-                  target="_blank"
-                  underline="none"
-                  onClick={() => {
+              <Grid
+                item
+                xl={3}
+                lg={4}
+                md={6}
+                sm={12}
+                xs={12}
+                justifyContent="center"
+                alignItems="center"
+                display="flex"
+              >
+                <ProductCard
+                  onCardClick={() => {
                     localStorage.setItem("product", JSON.stringify(doc));
                     navigate("/productDetail");
                   }}
-                >
-                  <ProductCard
-                    prodLabel={doc["prodName"]}
-                    prodPrice={doc.prodPrice}
-                    prodImg={doc.imgUrl}
-                  />
-                </Link>
+                  onClick={() => addToCart(doc)}
+                  prodLabel={doc["prodName"]}
+                  prodPrice={doc.prodPrice}
+                  prodImg={doc.imgUrl}
+                />
               </Grid>
             );
           })}
@@ -75,7 +90,7 @@ const Homepage = () => {
             <ProductCard />
           </Grid> */}
         </Grid>
-      </Container>
+      </Box>
     </Base>
   );
 };
