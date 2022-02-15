@@ -1,19 +1,12 @@
-import {
-  Box,
-  Grid,
-  Typography,
-  Container,
-  IconButton,
-  Link,
-} from "@mui/material";
+import { Grid, Container, Link } from "@mui/material";
 import { makeStyles } from "@mui/styles";
 import React, { useEffect, useState } from "react";
-import { FaShoppingCart } from "react-icons/fa";
 import Base from "../first/Base";
 import ProductCard from "./ProductCard";
 import { collection, getDocs } from "firebase/firestore";
 import firebase from "../first/Firebase";
 import { useNavigate } from "react-router-dom";
+import Header from "../components/Header";
 
 const useStyles = makeStyles({
   root: {
@@ -35,81 +28,7 @@ const Homepage = () => {
 
   return (
     <Base className={classes.root}>
-      <Box
-        sx={{
-          mx: "80px",
-        }}
-      >
-        <Grid
-          container
-          sx={{
-            p: "25px",
-            px: "100px",
-            background: "linear-gradient(to right ,#fdac1e, #fec01d)",
-            height: "400px",
-            borderRadius: "30px",
-          }}
-        >
-          <Grid
-            item
-            justifyContent="start"
-            display="flex"
-            lg={4}
-            md={4}
-            sx={{ display: { xs: "none", sm: "none", md: "block" } }}
-          >
-            <Typography
-              variant="subtitle1"
-              sx={{
-                color: "#fff",
-                fontWeight: "bold",
-                fontFamily: "Ubuntu",
-              }}
-            >
-              Home / Product
-            </Typography>
-          </Grid>
-          <Grid
-            item
-            justifyContent="center"
-            display="flex"
-            lg={4}
-            md={4}
-            sm={12}
-            xs={12}
-          >
-            <Typography
-              variant="h4"
-              sx={{
-                fontWeight: "bold",
-                fontFamily: "Ubuntu",
-              }}
-            >
-              Shop
-            </Typography>
-          </Grid>
-          <Grid
-            item
-            lg={4}
-            md={4}
-            sx={{
-              justifyContent: "flex-end",
-              display: { xs: "none", sm: "none", md: "flex" },
-              alignItems: "start",
-            }}
-          >
-            <IconButton
-              sx={{
-                color: "#000",
-                alignItems: "start",
-              }}
-              size="small"
-            >
-              <FaShoppingCart />
-            </IconButton>
-          </Grid>
-        </Grid>
-      </Box>
+      <Header />
       <Container maxWidth="xl">
         <Grid
           sx={{

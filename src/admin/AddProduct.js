@@ -84,7 +84,7 @@ const AddProduct = () => {
       data: formData,
     };
     try {
-      let res = await axios(options).then((res) => {
+      await axios(options).then((res) => {
         let _filename = res.data.data.image.filename;
         console.log(_filename);
         let imageUrl = res.data.data.url;
