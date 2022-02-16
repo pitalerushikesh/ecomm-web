@@ -2,10 +2,11 @@ import React from "react";
 import { Box, Grid, Typography, IconButton } from "@mui/material";
 import { FaShoppingCart } from "react-icons/fa";
 import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 const Header = () => {
   const { cartItems } = useSelector((state) => state.CartReducer);
-
+  const navigate = useNavigate();
   return (
     <Box
       sx={{
@@ -76,8 +77,13 @@ const Header = () => {
               alignItems: "start",
             }}
             size="small"
+            onClick={() => navigate("/cart")}
           >
-            <FaShoppingCart />
+            <FaShoppingCart
+              style={{
+                paddingX: "5px",
+              }}
+            />
             {cartItems.length}
           </IconButton>
         </Grid>

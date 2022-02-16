@@ -22,7 +22,7 @@ const Homepage = () => {
   const [products, setProducts] = useState([]);
   const _fetchData = async () => {
     const _products = await getDocs(collection(firebase, "Products"));
-    setProducts(_products.docs.map((doc) => doc.data()));
+    setProducts(_products.docs.map((doc) => ({ id: doc.id, ...doc.data() })));
   };
   useEffect(() => {
     _fetchData();
@@ -33,6 +33,7 @@ const Homepage = () => {
   }, [cartItems]);
 
   const addToCart = (product) => {
+    console.log(product);
     dispatch({ type: "ADD_TO_CART", payload: product });
   };
 
@@ -43,7 +44,7 @@ const Homepage = () => {
         <Grid
           sx={{
             position: "relative",
-            top: "-300px",
+            top: "-280px",
           }}
           container
           justifyContent="center"

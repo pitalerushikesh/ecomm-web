@@ -39,18 +39,26 @@ const ProductCard = ({
       <CardContent>
         <Grid container>
           <Grid item xs={6} alignItems="center" display="flex">
-            <Card
+            <IconButton
+              size="small"
               sx={{
                 p: "4px",
                 border: "1px solid #bcbcbc",
                 borderRadius: "50%",
                 justifyContent: "center",
                 alignItems: "center",
+                backgroundColor: "#fff",
                 display: "flex",
+                color: "#000",
+                "&:hover": {
+                  color: "#fff",
+                  backgroundColor: "#000",
+                },
               }}
+              onClick={onCardClick}
             >
               <AiOutlineFullscreen />
-            </Card>
+            </IconButton>
           </Grid>
           <Grid
             item
@@ -86,6 +94,7 @@ const ProductCard = ({
             display="flex"
           >
             <Box
+              onClick={onCardClick}
               component="img"
               className="prod-img"
               src={prodImg}
