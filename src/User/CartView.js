@@ -7,9 +7,12 @@ import {
   Box,
   IconButton,
   Divider,
+  BottomNavigation,
+  Paper,
+  Button,
 } from "@mui/material";
 import { AiFillDelete } from "react-icons/ai";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Base from "../first/Base";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -91,6 +94,16 @@ const CartProduct = ({ prod_img, prod_label, prod_price, onClick }) => {
 const CartView = () => {
   const { cartItems } = useSelector((state) => state.CartReducer);
   const dispatch = useDispatch();
+  const [totalAmount, setTotalAmount] = useState(0);
+
+  useEffect(() => {
+    let tempTotal = 0;
+    cartItems.forEach((cartItem) => {
+      tempTotal = Number(tempTotal) + Number(cartItem.prodPrice);
+    });
+    setTotalAmount(tempTotal);
+  }, [cartItems]);
+
   useEffect(() => {
     localStorage.setItem("cartItems", JSON.stringify(cartItems));
   }, [cartItems]);
@@ -104,6 +117,7 @@ const CartView = () => {
       <Box
         sx={{
           p: 3,
+          mb: 5,
         }}
       >
         <Container
@@ -134,6 +148,44 @@ const CartView = () => {
           </Grid>
         </Grid>
       </Box>
+      <Paper
+        sx={{ position: "fixed", bottom: 0, left: 0, right: 0 }}
+        elevation={3}
+      >
+        <BottomNavigation
+          sx={{
+            // backgroundColor: "#fdac1e",
+            p: 3,
+            background: "linear-gradient(to right ,#fdac1e, #fec01d)",
+            justifyContent: "space-between",
+          }}
+        >
+          <Typography variant="h3" fontWeight="bold">
+            Total Amount : ₹ {totalAmount}
+          </Typography>
+          <Button
+            size="large"
+            sx={{
+              color: "#000",
+              fontSize: "1.5rem",
+              textTransform: "none",
+              fontWeight: "bold",
+              borderRadius: "30px",
+              p: 4,
+              fontFamily: "Ubuntu",
+
+              backgroundColor: "#fff",
+              "&:hover": {
+                backgroundColor: "#FFEBC2",
+                color: "#000",
+              },
+            }}
+            variant="contained"
+          >
+            Continue
+          </Button>
+        </BottomNavigation>
+      </Paper>
     </Base>
   );
 };

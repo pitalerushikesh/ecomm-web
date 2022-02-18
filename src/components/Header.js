@@ -1,5 +1,5 @@
 import React from "react";
-import { Box, Grid, Typography, IconButton } from "@mui/material";
+import { Box, Grid, Typography, IconButton, Badge } from "@mui/material";
 import { FaShoppingCart } from "react-icons/fa";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
@@ -79,12 +79,22 @@ const Header = () => {
             size="small"
             onClick={() => navigate("/cart")}
           >
-            <FaShoppingCart
-              style={{
-                paddingX: "5px",
+            <Badge
+              badgeContent={cartItems.length}
+              sx={{
+                "& .MuiBadge-badge": {
+                  color: "#000",
+                  backgroundColor: "#fff",
+                },
+                fontWeight: "bold",
               }}
-            />
-            {cartItems.length}
+            >
+              <FaShoppingCart
+                style={{
+                  paddingX: "5px",
+                }}
+              />
+            </Badge>
           </IconButton>
         </Grid>
       </Grid>

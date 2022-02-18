@@ -12,6 +12,7 @@ import { makeStyles } from "@mui/styles";
 import { Box } from "@mui/system";
 import { collection, getDocs } from "firebase/firestore";
 import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import tshirt1 from "../assets/tshirt1.png";
 import tshirt2 from "../assets/tshirt2.png";
@@ -31,10 +32,14 @@ const ProductImage = [tshirt1, tshirt2, tshirt3];
 const ProductColors = ["#00d9ff", "#ff6b01", "#fdc20c", "#AB9160"];
 const ProductSize = [37, 38, 39, 40, 41, 42];
 const RightDetailCard = () => {
+  const dispatch = useDispatch();
   const [value, setValue] = React.useState(2);
   const [colorValue, setColorValue] = React.useState(ProductColors[0]);
   const [sizeValue, setSizeValue] = React.useState(ProductSize[0]);
-
+  const addToCart = (product) => {
+    console.log(product);
+    dispatch({ type: "ADD_TO_CART", payload: product });
+  };
   return (
     <Grid container rowSpacing={4}>
       <Grid item lg={12} md={12} xs={12} sm={12}>
@@ -138,6 +143,7 @@ const RightDetailCard = () => {
         display="flex"
       >
         <Box
+          className="size-selector"
           sx={{
             display: "flex",
             justifyContent: "center",
@@ -219,6 +225,7 @@ const RightDetailCard = () => {
                 color: "#fff",
               },
             }}
+            onClick={() => addToCart()}
           >
             <Typography fontFamily="Ubuntu" variant="subtitle1">
               Add to cart
@@ -246,8 +253,9 @@ const DetailCard = ({ prod_label, prod_price, prod_img }) => {
         filter: "drop-shadow(0px 10px 15px gray)",
         backgroundColor: "#ffe0b2",
       }}
+      className="detail-card"
     >
-      <CardContent>
+      <CardContent className="detail-card">
         <Grid
           container
           justifyContent="center"
@@ -284,52 +292,35 @@ const DetailCard = ({ prod_label, prod_price, prod_img }) => {
               reprehenderit ex fugiat adipisicing pariatur nostrud.
             </Typography>
 
-            <Container
+            <Box
+              className="detail-card-image"
               sx={{
-                justifyContent: "start",
-                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+                display: { xs: "none", sm: "none", md: "none", lg: "flex" },
               }}
             >
-              <Grid
-                container
-                alignItems="center"
-                display="flex"
-                spacing={-10}
-                fullWidth
-              >
-                {ProductImage.map((image) => (
-                  <Grid
-                    item
-                    lg={4}
-                    md={4}
-                    xs={4}
-                    sm={4}
-                    justifyContent="center"
-                    display="flex"
-                    paddingRight={1}
-                  >
-                    <Card
-                      elevation={0}
-                      sx={{
-                        p: "10px",
-                        height: "60px",
-                        width: "60px",
-                        borderRadius: "10px",
-                        justifyContent: "center",
-                        alignItems: "center",
-                        display: "flex",
-                        backgroundColor:
-                          selectedImage === image ? "#fdc20b" : "#fff0da",
-                        cursor: "pointer",
-                      }}
-                      onClick={() => setSelectedImage(image)}
-                    >
-                      <Box component="img" src={image} width="50px" />
-                    </Card>
-                  </Grid>
-                ))}
-              </Grid>
-            </Container>
+              {ProductImage.map((image) => (
+                <Card
+                  elevation={0}
+                  sx={{
+                    p: "10px",
+                    height: "60px",
+                    width: "60px",
+                    borderRadius: "10px",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    display: "flex",
+                    backgroundColor:
+                      selectedImage === image ? "#fdc20b" : "#fff0da",
+                    cursor: "pointer",
+                  }}
+                  onClick={() => setSelectedImage(image)}
+                >
+                  <Box component="img" src={image} width="50px" />
+                </Card>
+              ))}
+            </Box>
           </Grid>
           <Grid
             lg={4}
@@ -376,6 +367,35 @@ const DetailCard = ({ prod_label, prod_price, prod_img }) => {
               </Typography>
             </Card>
           </Grid>
+          <Box
+            className="detail-card-image"
+            sx={{
+              justifyContent: "center",
+              alignItems: "center",
+              display: { xs: "flex", sm: "flex", md: "flex", lg: "none" },
+            }}
+          >
+            {ProductImage.map((image) => (
+              <Card
+                elevation={0}
+                sx={{
+                  p: "10px",
+                  height: "60px",
+                  width: "60px",
+                  borderRadius: "10px",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  display: "flex",
+                  backgroundColor:
+                    selectedImage === image ? "#fdc20b" : "#fff0da",
+                  cursor: "pointer",
+                }}
+                onClick={() => setSelectedImage(image)}
+              >
+                <Box component="img" src={image} width="50px" />
+              </Card>
+            ))}
+          </Box>
           <Grid
             lg={4}
             md={12}
@@ -393,12 +413,20 @@ const DetailCard = ({ prod_label, prod_price, prod_img }) => {
 
 const ProductDetail = ({ prodLabel, prodImg, prodPrice }) => {
   const classes = useStyles();
+  const [loading, setLoading] = useState(false);
   const [product, setProduct] = useState([]);
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   const [products, setProducts] = useState([]);
   const _fetchData = async () => {
-    const _products = await getDocs(collection(firebase, "Products"));
-    setProducts(_products.docs.map((doc) => doc.data()));
+    try {
+      const _products = await getDocs(collection(firebase, "Products"));
+      setProducts(_products.docs.map((doc) => doc.data()));
+      setLoading(true);
+    } catch (error) {
+      console.log(error);
+      setLoading(false);
+    }
   };
   useEffect(() => {
     _fetchData();
@@ -409,8 +437,12 @@ const ProductDetail = ({ prodLabel, prodImg, prodPrice }) => {
     setProduct(_product);
   }, []);
 
+  const addToCart = (product) => {
+    console.log(product);
+    dispatch({ type: "ADD_TO_CART", payload: product });
+  };
   return (
-    <Base className={classes.root}>
+    <Base loading={loading} className={classes.root}>
       <Header />
       <Box
         sx={{
@@ -440,22 +472,27 @@ const ProductDetail = ({ prodLabel, prodImg, prodPrice }) => {
         >
           {products.map((doc) => {
             return (
-              <Grid item lg={4} md={4} sm={6} xs={12}>
-                <Link
-                  rel="noopener noreferrer"
-                  target="_blank"
-                  underline="none"
-                  onClick={() => {
+              <Grid
+                item
+                xl={3}
+                lg={4}
+                md={6}
+                sm={12}
+                xs={12}
+                justifyContent="center"
+                alignItems="center"
+                display="flex"
+              >
+                <ProductCard
+                  onCardClick={() => {
                     localStorage.setItem("product", JSON.stringify(doc));
                     navigate("/productDetail");
                   }}
-                >
-                  <ProductCard
-                    prodLabel={doc["prodName"]}
-                    prodPrice={doc.prodPrice}
-                    prodImg={doc.imgUrl}
-                  />
-                </Link>
+                  onClick={() => addToCart(doc)}
+                  prodLabel={doc["prodName"]}
+                  prodPrice={doc.prodPrice}
+                  prodImg={doc.imgUrl}
+                />
               </Grid>
             );
           })}

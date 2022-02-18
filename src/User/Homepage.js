@@ -20,9 +20,16 @@ const Homepage = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [products, setProducts] = useState([]);
+  const [loading, setLoading] = useState(false);
   const _fetchData = async () => {
-    const _products = await getDocs(collection(firebase, "Products"));
-    setProducts(_products.docs.map((doc) => ({ id: doc.id, ...doc.data() })));
+    try {
+      const _products = await getDocs(collection(firebase, "Products"));
+      setProducts(_products.docs.map((doc) => ({ id: doc.id, ...doc.data() })));
+      setLoading(true);
+    } catch (err) {
+      console.log(err);
+      setLoading(false);
+    }
   };
   useEffect(() => {
     _fetchData();
@@ -38,7 +45,7 @@ const Homepage = () => {
   };
 
   return (
-    <Base className={classes.root}>
+    <Base loading={loading} className={classes.root}>
       <Header />
       <Box justifyContent="center" alignItems="center" display="flex">
         <Grid

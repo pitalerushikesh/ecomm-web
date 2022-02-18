@@ -5,6 +5,8 @@ import "./user/css/Homepage.css";
 import Router from "./Router";
 import { Provider } from "react-redux";
 import { Store } from "./components/redux/Store";
+import "././user/css/ProductDetail.css";
+import "././first/css/register.css";
 
 ReactDOM.render(
   <Provider store={Store}>

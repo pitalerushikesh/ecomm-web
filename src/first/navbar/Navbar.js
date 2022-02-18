@@ -12,6 +12,7 @@ import MenuItem from "@mui/material/MenuItem";
 import Menu from "@mui/material/Menu";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { makeStyles } from "@mui/styles";
+import { useNavigate } from "react-router-dom";
 
 const settings = ["Profile", "Account", "Dashboard", "Logout"];
 
@@ -32,6 +33,7 @@ const Navbar = () => {
     setAnchorElUser(event.currentTarget);
   };
 
+  const navigate = useNavigate();
   const handleCloseNavMenu = () => {
     setAnchorElNav(null);
   };
@@ -123,7 +125,7 @@ const Navbar = () => {
                       }}
                       textAlign="center"
                     >
-                      Blog
+                      Cart
                     </Typography>
                   </MenuItem>
                 </Menu>
@@ -142,7 +144,7 @@ const Navbar = () => {
               <Box sx={{ display: { xs: "none", md: "flex" } }}>
                 <Button
                   key="Home"
-                  onClick={handleCloseNavMenu}
+                  onClick={() => navigate("/")}
                   sx={{
                     my: 2,
                     color: "black",
@@ -153,17 +155,17 @@ const Navbar = () => {
                 </Button>
                 <Button
                   key="Shop"
-                  onClick={handleCloseNavMenu}
+                  onClick={() => navigate("/productDetail")}
                   sx={{ my: 2, color: "black", display: "block" }}
                 >
                   Shop
                 </Button>
                 <Button
                   key="Blog"
-                  onClick={handleCloseNavMenu}
+                  onClick={() => navigate("/cart")}
                   sx={{ my: 2, color: "black", display: "block" }}
                 >
-                  Blog
+                  Cart
                 </Button>
               </Box>
               <Typography
