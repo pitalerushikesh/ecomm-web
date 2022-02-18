@@ -4,9 +4,8 @@
 
 .header {
   position:relative;
-  text-align:center;
+  
   background: linear-gradient(60deg, #fdac1e 0%, #fec01d 100%);
-  color:#fec01d;
 }
 
 
@@ -35,7 +34,7 @@
 .content {
   position:relative;
   height:20vh;
-  text-align:center;
+  
   background-color: white;
 }
 

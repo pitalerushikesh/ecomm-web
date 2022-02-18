@@ -166,3 +166,28 @@
               ))}
             </Menu>
           </Box>
+
+
+
+
+          <Grid container spacing={2}>
+              <Grid item xs={12} sm={6}>
+                <TextField name="firstName" label="First Name" />
+              </Grid>
+              <Grid item xs={12} sm={6}>
+                <TextField name="lastName" label="Last Name" />
+              </Grid>
+              <Grid item xs={12}></Grid>
+              <Grid item xs={12}></Grid>
+              <Grid item xs={12}>
+                <FormControlLabel
+                  sx={{
+                    color: "#000",
+                  }}
+                  control={
+                    <Checkbox value="allowExtraEmails" color="primary" />
+                  }
+                  label="I agree to the terms and condition."
+                />
+              </Grid>
+            </Grid>
