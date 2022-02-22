@@ -1,8 +1,10 @@
 import React from "react";
 import Button from "@mui/material/Button";
-import TextField from "../components/FormUI/TextField";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import Checkbox from "@mui/material/Checkbox";
+import TextFormField from "../../components/FormUI/TextFormField";
+import SelectCountry from "../../components/FormUI/SelectCountry";
+
+import { countries } from "../../components/data/Countries";
+import Submit from "../../components/FormUI/Submit";
 import Link from "@mui/material/Link";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
@@ -10,7 +12,8 @@ import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import * as Yup from "yup";
 import { Form, Formik } from "formik";
-import SimpleWave from "./SimpleWave";
+import SimpleWave from "../SimpleWave";
+import FormControlWrapper from "../../components/FormUI/FormControl";
 function Copyright(props) {
   return (
     <Typography
@@ -41,6 +44,7 @@ const INITIAL_FORM_STATE = {
   country: "",
   state: "",
   city: "",
+  termsOfService: false,
 };
 
 const FORM_VALIDATION = Yup.object().shape({
@@ -65,6 +69,9 @@ const FORM_VALIDATION = Yup.object().shape({
   country: Yup.string().required("Country is required"),
   state: Yup.string().required("State is required"),
   city: Yup.string().required("City is required"),
+  termsOfService: Yup.boolean()
+    .oneOf([true], "You must agree to the terms and Conditions.")
+    .required("You must agree to the terms and Conditions."),
 });
 
 const Register = () => {
@@ -122,34 +129,53 @@ const Register = () => {
                   <Typography>Your Details</Typography>
                 </Grid>
                 <Grid item xs={12} sm={6}>
-                  <TextField name="firstName" label="First Name" />
+                  <TextFormField name="firstName" label="First Name" />
                 </Grid>
                 <Grid item xs={12} sm={6}>
-                  <TextField name="lastName" label="Last Name" />
+                  <TextFormField name="lastName" label="Last Name" />
                 </Grid>
                 <Grid item xs={12} sm={12}>
-                  <TextField name="email" label="Your Email" />
+                  <TextFormField name="email" label="Your Email" />
                 </Grid>
-                <Grid item xs={12} sm={12}>
-                  <TextField name="phone" label="Phone Number" />
-                </Grid>
-                <Grid item xs={12} sm={6}>
-                  <TextField name="password" label="Password" />
+                {/* <Grid item xs={12} sm={12}>
+                  <TextFormField name="phone" label="Phone Number" />
                 </Grid>
                 <Grid item xs={12} sm={6}>
-                  <TextField name="confirmPass" label="Confirm Password" />
+                  <TextFormField name="password" label="Password" />
                 </Grid>
+                <Grid item xs={12} sm={6}>
+                  <TextFormField name="confirmPass" label="Confirm Password" />
+                </Grid> */}
                 <Grid item xs={12} textAlign="start" display="flex">
                   <Typography>Your Address</Typography>
                 </Grid>
                 <Grid item xs={12} sm={12}>
-                  <TextField name="addressLine1" label="Address Line 1" />
+                  <TextFormField name="addressLine1" label="Address Line 1" />
                 </Grid>
                 <Grid item xs={12} sm={12}>
-                  <TextField name="addressLine2" label="Address Line 2" />
+                  <TextFormField name="addressLine2" label="Address Line 2" />
                 </Grid>
-                <Grid item xs={12} sm={6}></Grid>
-                <Grid item xs={12} sm={6}></Grid>
+                <Grid item xs={12} sm={12}>
+                  <SelectCountry
+                    name="country"
+                    label="Select Your Country"
+                    data={countries}
+                  />
+                </Grid>
+                <Grid item xs={12} sm={6}>
+                  <SelectCountry
+                    name="state"
+                    label="Select Your State"
+                    data={countries}
+                  />
+                </Grid>
+                <Grid item xs={12} sm={6}>
+                  <SelectCountry
+                    name="city"
+                    label="Select Your City"
+                    data={countries}
+                  />
+                </Grid>
                 <Grid
                   item
                   xs={12}
@@ -158,14 +184,10 @@ const Register = () => {
                   justifyContent="center"
                   alignItems="center"
                 >
-                  <FormControlLabel
-                    sx={{
-                      color: "#000",
-                    }}
-                    control={
-                      <Checkbox value="allowExtraEmails" color="primary" />
-                    }
-                    label="I agree to the terms and condition."
+                  <FormControlWrapper
+                    name="termsOfService"
+                    legend="Terms of Service"
+                    label="I agree to the terms and conditions"
                   />
                 </Grid>
                 <Grid
@@ -175,28 +197,7 @@ const Register = () => {
                   alignItems="center"
                   display="flex"
                 >
-                  <Button
-                    size="large"
-                    variant="contained"
-                    sx={{
-                      mt: 3,
-                      mb: 2,
-                      width: "40%",
-                      justifyContent: "center",
-                      alignItems: "center",
-                      display: "flex",
-                      backgroundColor: "#000",
-                      color: "#fff",
-                      fontWeight: "bold",
-                      fontSize: "1.5rem",
-                      "&:hover": {
-                        backgroundColor: "#fff",
-                        color: "#000",
-                      },
-                    }}
-                  >
-                    Register
-                  </Button>
+                  <Submit>Register</Submit>
                 </Grid>
               </Grid>
 

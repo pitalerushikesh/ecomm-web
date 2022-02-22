@@ -496,18 +496,6 @@ const ProductDetail = ({ prodLabel, prodImg, prodPrice }) => {
               </Grid>
             );
           })}
-          <Grid
-            item
-            lg={4}
-            md={6}
-            xs={12}
-            sm={12}
-            justifyContent="center"
-            alignItems="center"
-            display="flex"
-          >
-            <ProductCard />
-          </Grid>
         </Grid>
       </Container>
     </Base>

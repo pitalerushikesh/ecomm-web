@@ -1,9 +1,9 @@
-import { Autocomplete } from "@mui/material";
+import { Autocomplete, TextField, Box } from "@mui/material";
 import { useField, useFormikContext } from "formik";
-import { countries } from "../../../components/data/Countries";
+
 import React from "react";
 
-const SelectWrapper = ({ name, options, ...otherProps }) => {
+const SelectAnyWrapper = ({ name, data, ...otherProps }) => {
   const { setFieldValue } = useFormikContext();
   const [field, meta] = useField(name);
 
@@ -15,7 +15,6 @@ const SelectWrapper = ({ name, options, ...otherProps }) => {
   const configSelect = {
     ...field,
     ...otherProps,
-    select: true,
     variant: "outlined",
     fullWidth: true,
     onChange: handleChange,
@@ -28,26 +27,30 @@ const SelectWrapper = ({ name, options, ...otherProps }) => {
 
   return (
     <Autocomplete
-      options={countries}
+      options={data}
       autoHighlight
       getOptionLabel={(option) => option.label}
-      renderOption={(option) => (
+      renderOption={(props, option) => (
         <Box
           component="li"
           sx={{ "& > img": { mr: 2, flexShrink: 0 } }}
           {...props}
         >
-          <img
-            loading="lazy"
-            width="20"
-            src={`https://www.countryflags.io/${option.code.toLowerCase()}.png`}
-            srcset={`https://www.countryflags.io/${option.code.toLowerCase()}.png 2x`}
-          />
           {option.label}({option.code})
         </Box>
+      )}
+      renderInput={(params) => (
+        <TextField
+          {...params}
+          {...configSelect}
+          inputProps={{
+            ...params.inputProps,
+            autoComplete: "new-password",
+          }}
+        ></TextField>
       )}
     />
   );
 };
 
-export default SelectWrapper;
+export default SelectAnyWrapper;

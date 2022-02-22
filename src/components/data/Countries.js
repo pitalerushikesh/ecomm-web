@@ -1,4 +1,4 @@
-const countries = [
+export const countries = [
   { code: "AD", label: "Andorra", phone: "376" },
   {
     code: "AE",
