@@ -3,7 +3,7 @@ import firebase, { authentication } from "../Firebase";
 import { signInWithPopup, GoogleAuthProvider } from "firebase/auth";
 import { Box } from "@mui/system";
 import { Button } from "@mui/material";
-import { addDoc, collection } from "firebase/firestore";
+import { addDoc, collection, serverTimestamp } from "firebase/firestore";
 
 const GoogleAuth = () => {
   const provider = new GoogleAuthProvider();
@@ -26,6 +26,7 @@ const GoogleAuth = () => {
           email: user.email,
           displayName: user.displayName,
           photoURL: user.photoURL,
+          createdAt: serverTimestamp(),
         });
         console.log(user);
       })
