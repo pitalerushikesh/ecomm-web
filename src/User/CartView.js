@@ -15,6 +15,7 @@ import { AiFillDelete } from "react-icons/ai";
 import React, { useEffect, useState } from "react";
 import Base from "../first/Base";
 import { useDispatch, useSelector } from "react-redux";
+import Register from "../first/SignIn/Register";
 
 const CartProduct = ({ prod_img, prod_label, prod_price, onClick }) => {
   return (
@@ -129,7 +130,7 @@ const CartView = () => {
           <Typography variant="h3">Shopping Cart</Typography>
         </Container>
 
-        <Grid conatiner>
+        <Grid conatiner display="flex">
           <Grid item lg={8} md={8} sm={12} xs={12}>
             {cartItems.map((productItem) => {
               return (
@@ -145,6 +146,9 @@ const CartView = () => {
                 </>
               );
             })}
+          </Grid>
+          <Grid item lg={4} md={4} sm={12} xs={12}>
+            <Register />
           </Grid>
         </Grid>
       </Box>

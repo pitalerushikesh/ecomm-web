@@ -4,10 +4,11 @@ import { signInWithPopup, GoogleAuthProvider } from "firebase/auth";
 import { Box } from "@mui/system";
 import { Button } from "@mui/material";
 import { addDoc, collection, serverTimestamp } from "firebase/firestore";
+import { useNavigate } from "react-router-dom";
 
 const GoogleAuth = () => {
   const provider = new GoogleAuthProvider();
-
+  const navigate = useNavigate();
   const signInWithGoogle = async () => {
     // const timestamp = Date.now();
     // const timeStamp = new Intl.DateTimeFormat("en-US", {
@@ -28,7 +29,9 @@ const GoogleAuth = () => {
           photoURL: user.photoURL,
           createdAt: serverTimestamp(),
         });
+        localStorage.setItem("user", JSON.stringify(user));
         console.log(user);
+        navigate("/");
       })
       .catch((error) => {
         console.log(error);

@@ -31,7 +31,8 @@ const useStyles = makeStyles({
 const ProductImage = [tshirt1, tshirt2, tshirt3];
 const ProductColors = ["#00d9ff", "#ff6b01", "#fdc20c", "#AB9160"];
 const ProductSize = [37, 38, 39, 40, 41, 42];
-const RightDetailCard = () => {
+
+const RightDetailCard = ({ onClick }) => {
   const dispatch = useDispatch();
   const [value, setValue] = React.useState(2);
   const [colorValue, setColorValue] = React.useState(ProductColors[0]);
@@ -225,7 +226,7 @@ const RightDetailCard = () => {
                 color: "#fff",
               },
             }}
-            onClick={() => addToCart()}
+            onClick={onClick}
           >
             <Typography fontFamily="Ubuntu" variant="subtitle1">
               Add to cart
@@ -237,7 +238,7 @@ const RightDetailCard = () => {
   );
 };
 
-const DetailCard = ({ prod_label, prod_price, prod_img }) => {
+const DetailCard = ({ prod_label, prod_price, prod_img, onClick }) => {
   const [selectedImage, setSelectedImage] = useState(ProductImage[0]);
 
   return (
@@ -305,6 +306,7 @@ const DetailCard = ({ prod_label, prod_price, prod_img }) => {
                   elevation={0}
                   sx={{
                     p: "10px",
+                    m: 3,
                     height: "60px",
                     width: "60px",
                     borderRadius: "10px",
@@ -403,7 +405,7 @@ const DetailCard = ({ prod_label, prod_price, prod_img }) => {
             alignItems="center"
             display="flex"
           >
-            <RightDetailCard />
+            <RightDetailCard onClick={onClick} />
           </Grid>
         </Grid>
       </CardContent>
@@ -456,6 +458,7 @@ const ProductDetail = ({ prodLabel, prodImg, prodPrice }) => {
           prod_img={product.imgUrl}
           prod_label={product.prodName}
           prod_price={product.prodPrice}
+          onClick={() => addToCart(product)}
         />
       </Box>
       <Container maxWidth="xl">
@@ -488,7 +491,10 @@ const ProductDetail = ({ prodLabel, prodImg, prodPrice }) => {
                     localStorage.setItem("product", JSON.stringify(doc));
                     navigate("/productDetail");
                   }}
-                  onClick={() => addToCart(doc)}
+                  onClick={() => {
+                    addToCart(doc);
+                    console.log("Document", doc);
+                  }}
                   prodLabel={doc["prodName"]}
                   prodPrice={doc.prodPrice}
                   prodImg={doc.imgUrl}

@@ -77,7 +77,10 @@ const Homepage = () => {
                     localStorage.setItem("product", JSON.stringify(doc));
                     navigate("/productDetail");
                   }}
-                  onClick={() => addToCart(doc)}
+                  onClick={() => {
+                    addToCart(doc);
+                    console.log(doc);
+                  }}
                   prodLabel={doc["prodName"]}
                   prodPrice={doc.prodPrice}
                   prodImg={doc.imgUrl}
