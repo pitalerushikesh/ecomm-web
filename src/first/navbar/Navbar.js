@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
@@ -15,7 +15,6 @@ import { makeStyles } from "@mui/styles";
 import { useNavigate } from "react-router-dom";
 
 const settings = ["Profile", "Account", "Dashboard", "Logout"];
-
 const useStyles = makeStyles({
   appBar: {
     alignItems: "center",
@@ -25,6 +24,7 @@ const useStyles = makeStyles({
 const Navbar = () => {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
+  const [user, setUser] = useState([]);
   const classes = useStyles();
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
@@ -32,6 +32,11 @@ const Navbar = () => {
   const handleOpenUserMenu = (event) => {
     setAnchorElUser(event.currentTarget);
   };
+  useEffect(() => {
+    const _user = JSON.parse(localStorage.getItem("user"));
+    setUser(_user);
+    console.log(_user);
+  }, []);
 
   const navigate = useNavigate();
   const handleCloseNavMenu = () => {
@@ -192,10 +197,7 @@ const Navbar = () => {
               <Box sx={{ flexGrow: 0 }}>
                 <Tooltip title="Open settings">
                   <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                    <Avatar
-                      alt="Remy Sharp"
-                      src="/static/images/avatar/2.jpg"
-                    />
+                    <Avatar alt="Remy Sharp" src={user.photoURL} />
                   </IconButton>
                 </Tooltip>
                 <Menu

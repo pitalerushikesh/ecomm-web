@@ -8,6 +8,7 @@ import { useNavigate } from "react-router-dom";
 
 const GoogleAuth = () => {
   const provider = new GoogleAuthProvider();
+
   const navigate = useNavigate();
   const signInWithGoogle = async () => {
     // const timestamp = Date.now();
