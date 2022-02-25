@@ -15,7 +15,7 @@ import { makeStyles } from "@mui/styles";
 import { useNavigate } from "react-router-dom";
 import { authentication } from "../Firebase";
 import { signOut } from "firebase/auth";
-const settings = ["Profile", "Account", "Dashboard", "Logout"];
+// const settings = ["Profile", "Account", "Dashboard", "Logout"];
 const useStyles = makeStyles({
   appBar: {
     alignItems: "center",

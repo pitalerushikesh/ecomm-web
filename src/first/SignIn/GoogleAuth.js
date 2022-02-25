@@ -36,23 +36,30 @@ const GoogleAuth = () => {
       .then(async (result) => {
         const new_user = result.user;
 
-        users.map(async (user) => {
-          if (user.email === new_user.email) {
-            console.log("User already exists");
-            return;
-          } else {
-            await addDoc(collection(firebase, "Users"), {
-              uid: new_user.uid,
-              email: new_user.email,
-              displayName: new_user.displayName,
-              photoURL: new_user.photoURL,
-              createdAt: serverTimestamp(),
-            });
-            localStorage.setItem("user", JSON.stringify(user));
-            console.log(user);
-            navigate("/");
-          }
-        });
+        try {
+          console.log("Im Outside", new_user.email);
+          users.map((user) => {
+            console.log("Im Inside1", user.email);
+            console.log("Im Inside2", new_user.email);
+            if (user.email === new_user.email) {
+              console.log("User already exists");
+            } else {
+              console.log("Im Inside3", new_user.email);
+              addDoc(collection(firebase, "Users"), {
+                uid: new_user.uid,
+                email: new_user.email,
+                displayName: new_user.displayName,
+                photoURL: new_user.photoURL,
+                createdAt: serverTimestamp(),
+              });
+              localStorage.setItem("user", JSON.stringify(user));
+              console.log(user);
+              navigate("/");
+            }
+          });
+        } catch (error) {
+          console.log(error);
+        }
       })
       .catch((error) => {
         console.log(error);
