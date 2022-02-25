@@ -1,13 +1,10 @@
 @import url(//fonts.googleapis.com/css?family=Lato:300:400);
 
 
-
 .header {
   position:relative;
-  
   background: linear-gradient(60deg, #fdac1e 0%, #fec01d 100%);
 }
-
 
 .inner-header {  
   width:100%;
@@ -34,14 +31,13 @@
 .content {
   position:relative;
   height:20vh;
-  
   background-color: white;
 }
 
 /* Animation */
 
 .parallax > use {
-  animation: move-forever 25s cubic-bezier(.55,.5,.45,.5)     infinite;
+  animation: move-forever 25s cubic-bezier(.55,.5,.45,.5) infinite;
 }
 .parallax > use:nth-child(1) {
   animation-delay: -2s;
@@ -77,4 +73,18 @@
     height:30vh;
   }
 
+}
+
+@media screen and (max-width:899px ) {
+
+  .login-img{
+    width: 50%;
+  }
+  
+}
+@media screen and (max-width:441px ) {
+
+  .login-img{
+    width: auto;
+  } 
 }

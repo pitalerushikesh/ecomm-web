@@ -2,13 +2,17 @@ import React, { useEffect, useState } from "react";
 import firebase, { authentication } from "../Firebase";
 import { signInWithPopup, GoogleAuthProvider } from "firebase/auth";
 import { Box } from "@mui/system";
-import { Button } from "@mui/material";
+import { Avatar, Button, Typography, Container } from "@mui/material";
 import {
   addDoc,
   collection,
   getDocs,
   serverTimestamp,
 } from "firebase/firestore";
+import google from "../../assets/google.png";
+import pcbg from "../../assets/login/pcbg.svg";
+import wave from "../../assets/login/wave.svg";
+import mbbg from "../../assets/login/mbbg.svg";
 import { useNavigate } from "react-router-dom";
 import Loader from "../../components/Loader";
 
@@ -35,7 +39,6 @@ const GoogleAuth = () => {
     await signInWithPopup(authentication, provider)
       .then(async (result) => {
         const new_user = result.user;
-
         try {
           console.log("Im Outside", new_user.email);
           users.map((user) => {
@@ -43,6 +46,8 @@ const GoogleAuth = () => {
             console.log("Im Inside2", new_user.email);
             if (user.email === new_user.email) {
               console.log("User already exists");
+              navigate("/");
+              return;
             } else {
               console.log("Im Inside3", new_user.email);
               addDoc(collection(firebase, "Users"), {
@@ -55,6 +60,7 @@ const GoogleAuth = () => {
               localStorage.setItem("user", JSON.stringify(user));
               console.log(user);
               navigate("/");
+              return;
             }
           });
         } catch (error) {
@@ -67,21 +73,53 @@ const GoogleAuth = () => {
   };
 
   return loading ? (
-    <Box
-      justifyContent="center"
-      alignItems="center"
-      display="flex"
-      height="100vh"
+    <Container
+      maxWidth="lg"
+      sx={{
+        justifyContent: "center",
+        alignItems: "center",
+        display: "flex",
+        pt: 20,
+        flexDirection: "column",
+      }}
     >
+      <Box
+        component="img"
+        src={pcbg}
+        width="50%"
+        sx={{
+          display: { xs: "none", sm: "none", md: "block" },
+        }}
+      />
+      <img src={wave} />
+      <Box
+        component="img"
+        src={mbbg}
+        sx={{
+          display: { sm: "block", md: "none" },
+        }}
+        className="login-img"
+      />
       <Button
-        color="primary"
+        startIcon={<Avatar src={google} />}
+        sx={{
+          backgroundColor: "#fff",
+          textTransform: "none",
+          borderRadius: "10px",
+          mt: 10,
+          py: 2,
+          px: 4,
+          "&:hover": {
+            backgroundColor: "#e0e0e0",
+          },
+        }}
         variant="conatined"
         size="large"
         onClick={signInWithGoogle}
       >
-        Google Sign in
+        <Typography variant="h6">Sign In With Google</Typography>
       </Button>
-    </Box>
+    </Container>
   ) : (
     <Loader />
   );
