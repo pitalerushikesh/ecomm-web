@@ -14,12 +14,23 @@ const Router = () => {
     <AuthProvider>
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<Homepage />} />
-          <Route path="/wave" element={<SimpleWave />} />
-          <Route path="/googleauth" element={<GoogleAuth />} />
-          <PrivateRoute path="/addProduct" element={<AddProduct />} />
-          <PrivateRoute path="/productDetail" element={<ProductDetail />} />
-          <PrivateRoute path="/cart" element={<CartView />} />
+          <Route exact path="/" element={<Homepage />} />
+
+          <Route exact path="/wave" element={<SimpleWave />} />
+          <Route exact path="/login" element={<GoogleAuth />} />
+          <Route exact path="/addProduct" element={<PrivateRoute />}>
+            <Route exact path="/addProduct" element={<AddProduct />} />
+          </Route>
+          <Route exact path="/addProduct" element={<PrivateRoute />}>
+            <Route exact path="/addProduct" element={<AddProduct />} />
+          </Route>
+          <Route exact path="/productDetail" element={<PrivateRoute />}>
+            <Route exact path="/productDetail" element={<ProductDetail />} />
+          </Route>
+          <Route exact path="/cart" element={<PrivateRoute />}>
+            <Route exact path="/cart" element={<CartView />} />
+          </Route>
+
           {/* <Route path="/productDetail/:productID" element={<ProductDetail />} /> */}
         </Routes>
       </BrowserRouter>

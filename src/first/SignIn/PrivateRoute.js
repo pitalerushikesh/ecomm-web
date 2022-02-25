@@ -1,20 +1,20 @@
 import React, { useContext } from "react";
-import { Route, Navigate } from "react-router-dom";
+import { Outlet, Navigate } from "react-router-dom";
 import { AuthContext } from "./Authentication";
 const PrivateRoute = ({ component: RouteComponent, ...rest }) => {
   const { currentUser } = useContext(AuthContext);
-  return (
-    <Route
-      {...rest}
-      render={(routeProps) =>
-        !!currentUser ? (
-          <RouteComponent {...routeProps} />
-        ) : (
-          <Navigate to={"/googleauth"} />
-        )
-      }
-    />
-  );
+  return currentUser ? <Outlet /> : <Navigate to="/login" />;
 };
 
 export default PrivateRoute;
+
+// <Route
+// {...rest}
+// render={(routeProps) =>
+//   !!currentUser ? (
+//     <RouteComponent {...routeProps} />
+//   ) : (
+//     <Navigate to={"/googleauth"} />
+//   )
+// }
+// />

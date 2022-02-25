@@ -13,7 +13,8 @@ import Menu from "@mui/material/Menu";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { makeStyles } from "@mui/styles";
 import { useNavigate } from "react-router-dom";
-
+import { authentication } from "../Firebase";
+import { signOut } from "firebase/auth";
 const settings = ["Profile", "Account", "Dashboard", "Logout"];
 const useStyles = makeStyles({
   appBar: {
@@ -25,7 +26,20 @@ const Navbar = () => {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
   const [user, setUser] = useState([]);
+  const navigate = useNavigate();
+
   const classes = useStyles();
+
+  const logOut = () => {
+    signOut(authentication)
+      .then(() => {
+        navigate("/login");
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
   };
@@ -38,7 +52,6 @@ const Navbar = () => {
     console.log(_user);
   }, []);
 
-  const navigate = useNavigate();
   const handleCloseNavMenu = () => {
     setAnchorElNav(null);
   };
@@ -216,11 +229,18 @@ const Navbar = () => {
                   open={Boolean(anchorElUser)}
                   onClose={handleCloseUserMenu}
                 >
-                  {settings.map((setting) => (
-                    <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                      <Typography textAlign="center">{setting}</Typography>
-                    </MenuItem>
-                  ))}
+                  <MenuItem key="Profile" onClick={handleCloseUserMenu}>
+                    <Typography textAlign="center">Profile</Typography>
+                  </MenuItem>
+                  <MenuItem
+                    key="Logout"
+                    onClick={() => {
+                      logOut();
+                      handleCloseUserMenu();
+                    }}
+                  >
+                    <Typography textAlign="center">Logout</Typography>
+                  </MenuItem>
                 </Menu>
               </Box>
             </Grid>
