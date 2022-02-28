@@ -38,6 +38,7 @@ const SelectWrapper = ({ name, data, ...otherProps }) => {
           <img
             loading="lazy"
             width="20"
+            alt={option.code.toLowerCase()}
             src={`https://flagcdn.com/w20/${option.code.toLowerCase()}.png`}
             srcSet={`https://flagcdn.com/w40/${option.code.toLowerCase()}.png 2x`}
           />
