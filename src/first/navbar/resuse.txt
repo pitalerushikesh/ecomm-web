@@ -191,3 +191,34 @@
                 />
               </Grid>
             </Grid>
+
+
+
+
+            try {
+          console.log("Im Outside", new_user.email);
+          users.map((user) => {
+            console.log("Im Inside1", user.email);
+            console.log("Im Inside2", new_user.email);
+            if (user.email === new_user.email) {
+              console.log("User already exists");
+              navigate("/");
+              return;
+            } else {
+              console.log("Im Inside3", new_user.email);
+              addDoc(collection(firebase, "Users"), {
+                uid: new_user.uid,
+                email: new_user.email,
+                displayName: new_user.displayName,
+                photoURL: new_user.photoURL,
+                createdAt: serverTimestamp(),
+              });
+              localStorage.setItem("user", JSON.stringify(user));
+              console.log(user);
+              navigate("/");
+              return;
+            }
+          });
+        } catch (error) {
+          console.log(error);
+        }

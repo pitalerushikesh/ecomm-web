@@ -25,7 +25,9 @@ const Homepage = () => {
     try {
       const _products = await getDocs(collection(firebase, "Products"));
       setProducts(_products.docs.map((doc) => ({ id: doc.id, ...doc.data() })));
-      setLoading(true);
+      setTimeout(() => {
+        setLoading(true);
+      }, 2000);
     } catch (err) {
       console.log(err);
       setLoading(false);
@@ -75,7 +77,7 @@ const Homepage = () => {
                 <ProductCard
                   onCardClick={() => {
                     localStorage.setItem("product", JSON.stringify(doc));
-                    navigate("/productDetail");
+                    navigate("/product");
                   }}
                   onClick={() => {
                     addToCart(doc);

@@ -3,6 +3,7 @@ import { Box, Grid, Typography, IconButton, Badge } from "@mui/material";
 import { FaShoppingCart } from "react-icons/fa";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import BreadCrumbs from "./BreadCrumbs";
 
 const Header = () => {
   const { cartItems } = useSelector((state) => state.CartReducer);
@@ -31,16 +32,7 @@ const Header = () => {
           md={4}
           sx={{ display: { xs: "none", sm: "none", md: "block" } }}
         >
-          <Typography
-            variant="subtitle1"
-            sx={{
-              color: "#fff",
-              fontWeight: "bold",
-              fontFamily: "Ubuntu",
-            }}
-          >
-            Home / Product
-          </Typography>
+          <BreadCrumbs />
         </Grid>
         <Grid
           item

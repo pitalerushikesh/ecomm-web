@@ -159,25 +159,26 @@ const CartView = () => {
         <BottomNavigation
           sx={{
             // backgroundColor: "#fdac1e",
-            p: 3,
+            p: 1,
             background: "linear-gradient(to right ,#fdac1e, #fec01d)",
             justifyContent: "space-between",
+            alignItems: "center",
           }}
         >
-          <Typography variant="h3" fontWeight="bold">
-            Total Amount : ₹ {totalAmount}
+          <Typography variant="h4" fontWeight="bold">
+            Total Amount : ₹ {totalAmount.toFixed(2)}
           </Typography>
           <Button
             size="large"
             sx={{
               color: "#000",
-              fontSize: "1.5rem",
+
               textTransform: "none",
               fontWeight: "bold",
               borderRadius: "30px",
-              p: 4,
-              fontFamily: "Ubuntu",
+              p: 2,
 
+              fontFamily: "Ubuntu",
               backgroundColor: "#fff",
               "&:hover": {
                 backgroundColor: "#FFEBC2",

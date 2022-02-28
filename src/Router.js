@@ -24,8 +24,8 @@ const Router = () => {
           <Route exact path="/addProduct" element={<PrivateRoute />}>
             <Route exact path="/addProduct" element={<AddProduct />} />
           </Route>
-          <Route exact path="/productDetail" element={<PrivateRoute />}>
-            <Route exact path="/productDetail" element={<ProductDetail />} />
+          <Route exact path="/product" element={<PrivateRoute />}>
+            <Route exact path="/product" element={<ProductDetail />} />
           </Route>
           <Route exact path="/cart" element={<PrivateRoute />}>
             <Route exact path="/cart" element={<CartView />} />

@@ -85,7 +85,7 @@ const Navbar = () => {
                 component="div"
                 sx={{ mr: 2, display: { xs: "none", md: "flex" } }}
               >
-                LOGO
+                OutStanders
               </Typography>
               <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
                 <IconButton
@@ -173,7 +173,7 @@ const Navbar = () => {
                 </Button>
                 <Button
                   key="Shop"
-                  onClick={() => navigate("/productDetail")}
+                  onClick={() => navigate("/product")}
                   sx={{ my: 2, color: "black", display: "block" }}
                 >
                   Shop
@@ -210,7 +210,7 @@ const Navbar = () => {
               <Box sx={{ flexGrow: 0 }}>
                 <Tooltip title="Open settings">
                   <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                    <Avatar alt="Remy Sharp" src={user.photoURL} />
+                    <Avatar alt={user.displayName} src={user.photoURL} />
                   </IconButton>
                 </Tooltip>
                 <Menu

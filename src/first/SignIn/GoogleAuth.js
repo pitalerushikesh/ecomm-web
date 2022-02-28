@@ -4,7 +4,8 @@ import { signInWithPopup, GoogleAuthProvider } from "firebase/auth";
 import { Box } from "@mui/system";
 import { Avatar, Button, Typography, Container } from "@mui/material";
 import {
-  addDoc,
+  doc,
+  setDoc,
   collection,
   getDocs,
   serverTimestamp,
@@ -24,7 +25,7 @@ const GoogleAuth = () => {
   const fetchUsers = async () => {
     try {
       const _users = await getDocs(collection(firebase, "Users"));
-      setUsers(_users.docs.map((doc) => ({ id: doc.id, ...doc.data() })));
+      setUsers(_users.docs.map((doc) => ({ id: doc.uid, ...doc.data() })));
       setLoading(true);
     } catch (error) {
       console.log(error);
@@ -39,32 +40,25 @@ const GoogleAuth = () => {
     await signInWithPopup(authentication, provider)
       .then(async (result) => {
         const new_user = result.user;
-        try {
-          console.log("Im Outside", new_user.email);
-          users.map((user) => {
-            console.log("Im Inside1", user.email);
-            console.log("Im Inside2", new_user.email);
-            if (user.email === new_user.email) {
-              console.log("User already exists");
+        if (users.find((user) => user.uid === new_user.uid)) {
+          console.log("User already exists", new_user);
+          localStorage.setItem("user", JSON.stringify(new_user));
+          navigate("/");
+        } else {
+          await setDoc(doc(firebase, "Users", new_user.email), {
+            name: new_user.displayName,
+            email: new_user.email,
+            photoURL: new_user.photoURL,
+            createdAt: serverTimestamp(),
+          })
+            .then(() => {
+              console.log("New user", new_user);
+              localStorage.setItem("user", JSON.stringify(new_user));
               navigate("/");
-              return;
-            } else {
-              console.log("Im Inside3", new_user.email);
-              addDoc(collection(firebase, "Users"), {
-                uid: new_user.uid,
-                email: new_user.email,
-                displayName: new_user.displayName,
-                photoURL: new_user.photoURL,
-                createdAt: serverTimestamp(),
-              });
-              localStorage.setItem("user", JSON.stringify(user));
-              console.log(user);
-              navigate("/");
-              return;
-            }
-          });
-        } catch (error) {
-          console.log(error);
+            })
+            .catch((err) => {
+              console.log(err);
+            });
         }
       })
       .catch((error) => {

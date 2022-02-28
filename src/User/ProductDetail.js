@@ -288,6 +288,7 @@ const DetailCard = ({ prod_label, prod_price, prod_img, onClick }) => {
                 py: 2,
                 color: "gray",
               }}
+              className="prod-desc"
             >
               Consequat irure irure in incididunt do voluptate fugiat culpa
               reprehenderit ex fugiat adipisicing pariatur nostrud.
