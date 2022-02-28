@@ -7,7 +7,7 @@ import {
   doc,
   setDoc,
   collection,
-  getDocs,
+  getDoc,
   serverTimestamp,
 } from "firebase/firestore";
 import google from "../../assets/google.png";
@@ -21,28 +21,31 @@ import SimpleWave from "../SimpleWave";
 const GoogleAuth = () => {
   const provider = new GoogleAuthProvider();
   const [users, setUsers] = useState([]);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
 
-  const fetchUsers = async () => {
-    try {
-      const _users = await getDocs(collection(firebase, "Users"));
-      setUsers(_users.docs.map((doc) => ({ id: doc.uid, ...doc.data() })));
-      setLoading(true);
-    } catch (error) {
-      console.log(error);
-      setLoading(false);
-    }
-  };
-  useEffect(() => {
-    fetchUsers();
-  }, []);
+  // const fetchUsers = async () => {
+  //   try {
+  //     const _users = await getDocs(collection(firebase, "Users"));
+  //     setUsers(_users.docs.map((doc) => ({ id: doc.uid, ...doc.data() })));
+  //     setLoading(true);
+  //   } catch (error) {
+  //     console.log(error);
+  //     setLoading(false);
+  //   }
+  // };
+  // useEffect(() => {
+  //   fetchUsers();
+  // }, []);
   const navigate = useNavigate();
   const signInWithGoogle = async () => {
     await signInWithPopup(authentication, provider)
       .then(async (result) => {
         const new_user = result.user;
-        if (users.find((user) => user.uid === new_user.uid)) {
-          console.log("User already exists", new_user);
+        const docRef = doc(firebase, "Users", new_user.email);
+        const docSnap = await getDoc(docRef);
+
+        if (docSnap.exists()) {
+          console.log("Document data:", docSnap.data());
           localStorage.setItem("user", JSON.stringify(new_user));
           navigate("/");
         } else {

@@ -24,6 +24,13 @@ const AddProduct = () => {
     prodPrice: "",
   });
 
+  // function renameFile(originalFile, newName) {
+  //   return new File([originalFile], newName, {
+  //     type: originalFile.type,
+  //     lastModified: originalFile.lastModified,
+  //   });
+  // }
+
   const { prodName, prodPrice } = state;
 
   const handleChange = (e) => (event) => {
@@ -62,16 +69,23 @@ const AddProduct = () => {
   var url =
     "https://api.imgbb.com/1/upload?key=3647b0520ccf7b47e53971529e0ef9ff";
 
+  // const tpImage = async (e) => {
+  //   e.preventDefault();
+  //   console.log(image);
+
+  //   console.log(renamedFile);
+  // };
+
   const postImageData = async (e) => {
     e.preventDefault();
     setLoading(true);
     var file = image;
     console.log("File : ", file);
-    var newFileName = file.name + Date.now();
-    console.log("FileName : ", newFileName);
     let formData = new FormData();
+    console.log(file);
 
-    formData.append("image", image, newFileName);
+    formData.append("image", file);
+    // formData.append("name", Date.now());
 
     let options = {
       method: "POST",

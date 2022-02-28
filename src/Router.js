@@ -15,18 +15,20 @@ const Router = () => {
         <Routes>
           <Route exact path="/" element={<Homepage />} />
           <Route exact path="/login" element={<GoogleAuth />} />
-          <Route exact path="/addProduct" element={<PrivateRoute />}>
+          <Route exact path="/cart" element={<CartView />} />
+          <Route exact path="/product" element={<ProductDetail />} />
+          <Route exact path="/addProduct" element={<AddProduct />} />
+
+          {/* <Route exact path="/addProduct" element={<PrivateRoute />}>
             <Route exact path="/addProduct" element={<AddProduct />} />
           </Route>
-          <Route exact path="/addProduct" element={<PrivateRoute />}>
-            <Route exact path="/addProduct" element={<AddProduct />} />
-          </Route>
+
           <Route exact path="/product" element={<PrivateRoute />}>
             <Route exact path="/product" element={<ProductDetail />} />
           </Route>
           <Route exact path="/cart" element={<PrivateRoute />}>
             <Route exact path="/cart" element={<CartView />} />
-          </Route>
+          </Route> */}
 
           {/* <Route path="/productDetail/:productID" element={<ProductDetail />} /> */}
         </Routes>
@@ -36,3 +38,9 @@ const Router = () => {
 };
 
 export default Router;
+
+{
+  /* <Route exact path="/addProduct" element={<PrivateRoute />}>
+            <Route exact path="/addProduct" element={<AddProduct />} />
+          </Route> */
+}
