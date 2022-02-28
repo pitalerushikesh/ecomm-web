@@ -1,27 +1,20 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import firebase, { authentication } from "../Firebase";
 import { signInWithPopup, GoogleAuthProvider } from "firebase/auth";
 import { Box } from "@mui/system";
 import { Avatar, Button, Typography, Container } from "@mui/material";
-import {
-  doc,
-  setDoc,
-  collection,
-  getDoc,
-  serverTimestamp,
-} from "firebase/firestore";
+import { doc, setDoc, getDoc, serverTimestamp } from "firebase/firestore";
 import google from "../../assets/google.png";
 import pcbg from "../../assets/login/pcbg.svg";
-
 import mbbg from "../../assets/login/mbbg.svg";
 import { useNavigate } from "react-router-dom";
-import Loader from "../../components/Loader";
+
 import SimpleWave from "../SimpleWave";
 
 const GoogleAuth = () => {
   const provider = new GoogleAuthProvider();
-  const [users, setUsers] = useState([]);
-  const [loading, setLoading] = useState(true);
+  //const [users, setUsers] = useState([]);
+  //const [loading, setLoading] = useState(true);
 
   // const fetchUsers = async () => {
   //   try {
@@ -70,7 +63,7 @@ const GoogleAuth = () => {
       });
   };
 
-  return loading ? (
+  return (
     <Container
       maxWidth="lg"
       sx={{
@@ -130,8 +123,6 @@ const GoogleAuth = () => {
         <Typography variant="h6">Sign In With Google</Typography>
       </Button>
     </Container>
-  ) : (
-    <Loader />
   );
 };
 
