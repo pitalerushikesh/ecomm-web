@@ -287,6 +287,7 @@ const DetailCard = ({ prod_label, prod_price, prod_img, onClick }) => {
               sx={{
                 py: 2,
                 color: "gray",
+                fontSize: "1.4rem",
               }}
               className="prod-desc"
             >

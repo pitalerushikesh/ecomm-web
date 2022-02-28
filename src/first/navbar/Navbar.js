@@ -6,7 +6,7 @@ import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import Avatar from "@mui/material/Avatar";
-import { Button, Grid } from "@mui/material";
+import { Button, Grid, Link } from "@mui/material";
 import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
 import Menu from "@mui/material/Menu";
@@ -30,10 +30,20 @@ const Navbar = () => {
 
   const classes = useStyles();
 
+  const [colorChange, setColorchange] = useState(false);
+  const changeNavbarColor = () => {
+    if (window.scrollY >= 80) {
+      setColorchange(true);
+    } else {
+      setColorchange(false);
+    }
+  };
+  window.addEventListener("scroll", changeNavbarColor);
   const logOut = () => {
     signOut(authentication)
       .then(() => {
         navigate("/login");
+        localStorage.removeItem("user");
       })
       .catch((error) => {
         console.log(error);
@@ -63,7 +73,7 @@ const Navbar = () => {
   return (
     <AppBar
       sx={{
-        backgroundColor: "transparent",
+        backgroundColor: colorChange ? "white" : "transparent",
         color: "black",
       }}
       className={classes.appBar}
@@ -194,7 +204,7 @@ const Navbar = () => {
                   display: { xs: "flex", md: "none" },
                 }}
               >
-                LOGO
+                OutStanders
               </Typography>
             </Grid>
             <Grid
@@ -208,11 +218,29 @@ const Navbar = () => {
               display="flex"
             >
               <Box sx={{ flexGrow: 0 }}>
-                <Tooltip title="Open settings">
-                  <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                    <Avatar alt={user.displayName} src={user.photoURL} />
-                  </IconButton>
-                </Tooltip>
+                {user === null ? (
+                  <Link
+                    underline="hover"
+                    sx={{
+                      color: "#000",
+                      fontSize: "1.2rem",
+                      fontFamily: "Ubuntu",
+                      fontWeight: "bold",
+                      p: 2,
+                      border: "1px solid #000",
+                      cursor: "pointer",
+                    }}
+                    onClick={() => navigate("/login")}
+                  >
+                    Sign In
+                  </Link>
+                ) : (
+                  <Tooltip title="Open settings">
+                    <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+                      <Avatar alt={user.displayName} src={user.photoURL} />
+                    </IconButton>
+                  </Tooltip>
+                )}
                 <Menu
                   sx={{ mt: "45px" }}
                   id="menu-appbar"

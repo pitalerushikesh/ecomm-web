@@ -22,6 +22,12 @@ const CartProduct = ({ prod_img, prod_label, prod_price, onClick }) => {
     <Card
       sx={{
         mb: 1,
+        display: {
+          sm: "none",
+          xs: "none",
+          md: "block",
+          lg: "block",
+        },
       }}
     >
       <CardContent>
@@ -92,6 +98,73 @@ const CartProduct = ({ prod_img, prod_label, prod_price, onClick }) => {
   );
 };
 
+const CartMobView = ({ prod_img, prod_label, prod_price, onClick }) => {
+  return (
+    <Card
+      sx={{
+        mb: 1,
+        display: {
+          sm: "block",
+          xs: "block",
+          md: "none",
+          lg: "none",
+        },
+      }}
+    >
+      <CardContent>
+        <Grid container>
+          <Grid
+            item
+            lg={4}
+            sm={4}
+            xs={4}
+            md={4}
+            justifyContent="start"
+            alignItems="center"
+            display="flex"
+          >
+            <Box
+              src={prod_img}
+              sx={{
+                px: 3,
+              }}
+              width="50%"
+              component="img"
+            />
+          </Grid>
+          <Grid item lg={7} sm={7} xs={7} md={7}>
+            <Typography variant="h5" fontFamily="Open Sans">
+              {prod_label}
+            </Typography>
+            <Typography variant="subtitle1" fontWeight="bold">
+              ₹{prod_price}
+            </Typography>
+          </Grid>
+          <Grid
+            item
+            lg={1}
+            md={1}
+            sm={1}
+            xs={1}
+            justifyContent="center"
+            alignItems="center"
+            display="flex"
+          >
+            <IconButton
+              sx={{
+                color: "red",
+              }}
+              onClick={onClick}
+            >
+              <AiFillDelete />
+            </IconButton>
+          </Grid>
+        </Grid>
+      </CardContent>
+    </Card>
+  );
+};
+
 const CartView = () => {
   const { cartItems } = useSelector((state) => state.CartReducer);
   const dispatch = useDispatch();
@@ -130,12 +203,19 @@ const CartView = () => {
           <Typography variant="h3">Shopping Cart</Typography>
         </Container>
 
-        <Grid conatiner display="flex">
+        <Grid container display="flex">
           <Grid item lg={8} md={8} sm={12} xs={12}>
             {cartItems.map((productItem) => {
               return (
                 <>
                   <CartProduct
+                    key={productItem.id}
+                    prod_img={productItem.imgUrl}
+                    prod_label={productItem.prodName}
+                    prod_price={productItem.prodPrice}
+                    onClick={() => deleteProduct(productItem)}
+                  />
+                  <CartMobView
                     key={productItem.id}
                     prod_img={productItem.imgUrl}
                     prod_label={productItem.prodName}
@@ -153,7 +233,7 @@ const CartView = () => {
         </Grid>
       </Box>
       <Paper
-        sx={{ position: "fixed", bottom: 0, left: 0, right: 0 }}
+        sx={{ position: "fixed", bottom: 0, left: 0, right: 0, zIndex: 1 }}
         elevation={3}
       >
         <BottomNavigation
@@ -165,7 +245,7 @@ const CartView = () => {
             alignItems: "center",
           }}
         >
-          <Typography variant="h4" fontWeight="bold">
+          <Typography variant="h6" fontWeight="bold">
             Total Amount : ₹ {totalAmount.toFixed(2)}
           </Typography>
           <Button

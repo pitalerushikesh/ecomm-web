@@ -13,10 +13,8 @@
     }
 }
    
-@media screen and (max-width: 991px) {
-    .prod-desc{
-        
-    }
+@media screen and (max-width: 499px) {
+    
 }
     
 
@@ -28,6 +26,9 @@
         justify-content: center !important;
         align-items: center !important;
         text-align: center !important;
+    }
+    .prod-desc{
+        padding :16px 50px !important;
     }
 }
     

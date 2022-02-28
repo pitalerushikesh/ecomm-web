@@ -15,8 +15,6 @@ const Router = () => {
       <BrowserRouter>
         <Routes>
           <Route exact path="/" element={<Homepage />} />
-
-          <Route exact path="/wave" element={<SimpleWave />} />
           <Route exact path="/login" element={<GoogleAuth />} />
           <Route exact path="/addProduct" element={<PrivateRoute />}>
             <Route exact path="/addProduct" element={<AddProduct />} />
