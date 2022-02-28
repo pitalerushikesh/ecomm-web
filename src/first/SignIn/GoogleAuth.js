@@ -91,7 +91,7 @@ const GoogleAuth = () => {
         <Box
           component="img"
           src={pcbg}
-          width="40%"
+          width="30%"
           sx={{
             display: { xs: "none", sm: "none", md: "block" },
           }}
