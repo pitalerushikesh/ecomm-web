@@ -2,7 +2,6 @@ import React from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import AddProduct from "./admin/AddProduct";
 import GoogleAuth from "./first/SignIn/GoogleAuth";
-import SimpleWave from "./first/SimpleWave";
 import CartView from "./user/CartView";
 import Homepage from "./user/Homepage";
 import ProductDetail from "./user/ProductDetail";

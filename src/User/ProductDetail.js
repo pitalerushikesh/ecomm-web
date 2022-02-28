@@ -6,13 +6,12 @@ import {
   Typography,
   Rating,
   Button,
-  Link,
 } from "@mui/material";
 import { makeStyles } from "@mui/styles";
 import { Box } from "@mui/system";
 import { collection, getDocs } from "firebase/firestore";
 import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import tshirt1 from "../assets/tshirt1.png";
 import tshirt2 from "../assets/tshirt2.png";
@@ -33,14 +32,14 @@ const ProductColors = ["#00d9ff", "#ff6b01", "#fdc20c", "#AB9160"];
 const ProductSize = [37, 38, 39, 40, 41, 42];
 
 const RightDetailCard = ({ onClick }) => {
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
   const [value, setValue] = React.useState(2);
   const [colorValue, setColorValue] = React.useState(ProductColors[0]);
   const [sizeValue, setSizeValue] = React.useState(ProductSize[0]);
-  const addToCart = (product) => {
-    console.log(product);
-    dispatch({ type: "ADD_TO_CART", payload: product });
-  };
+  // const addToCart = (product) => {
+  //   console.log(product);
+  //   dispatch({ type: "ADD_TO_CART", payload: product });
+  // };
   return (
     <Grid container rowSpacing={4}>
       <Grid item lg={12} md={12} xs={12} sm={12}>
