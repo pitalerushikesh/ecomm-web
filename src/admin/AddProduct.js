@@ -1,8 +1,8 @@
-import { Button, Grid, styled, TextField } from "@mui/material";
+import { Grid, TextField } from "@mui/material";
 import { Box } from "@mui/system";
 import React, { useRef, useState } from "react";
 import { FiUpload } from "react-icons/fi";
-import { DateTimePicker, LoadingButton } from "@mui/lab";
+import { LoadingButton } from "@mui/lab";
 import firebase from "../first/Firebase";
 import { addDoc, collection } from "firebase/firestore";
 import ImagePreview from "../components/ImagePreview";
@@ -90,7 +90,7 @@ const AddProduct = () => {
         let imageUrl = res.data.data.url;
         console.log(res.data);
         console.log(res.data.data.url);
-        if (imageUrl.length != 0) {
+        if (imageUrl.length !== 0) {
           console.log("Url Added", imageUrl);
 
           onSubmit({ e, imgUrl: imageUrl });

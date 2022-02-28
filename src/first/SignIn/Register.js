@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import TextFormField from "../../components/FormUI/TextFormField";
 import SelectCountry from "../../components/FormUI/SelectCountry";
 import { countries } from "../../components/data/Countries";
-import Submit from "../../components/FormUI/Submit";
 import Link from "@mui/material/Link";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
@@ -11,23 +10,23 @@ import Container from "@mui/material/Container";
 import * as Yup from "yup";
 import { Form, Formik } from "formik";
 import FormControlWrapper from "../../components/FormUI/FormControl";
-function Copyright(props) {
-  return (
-    <Typography
-      variant="body2"
-      color="text.secondary"
-      align="center"
-      {...props}
-    >
-      {"Copyright © "}
-      <Link color="inherit" href="#">
-        Ecommerce Website
-      </Link>
-      {new Date().getFullYear()}
-      {"."}
-    </Typography>
-  );
-}
+// function Copyright(props) {
+//   return (
+//     <Typography
+//       variant="body2"
+//       color="text.secondary"
+//       align="center"
+//       {...props}
+//     >
+//       {"Copyright © "}
+//       <Link color="inherit" href="#">
+//         Ecommerce Website
+//       </Link>
+//       {new Date().getFullYear()}
+//       {"."}
+//     </Typography>
+//   );
+// }
 
 const INITIAL_FORM_STATE = {
   firstName: "",
@@ -72,9 +71,9 @@ const FORM_VALIDATION = Yup.object().shape({
 });
 
 const Register = () => {
-  const handleSubmit = (event) => {
-    event.preventDefault();
-  };
+  // const handleSubmit = (event) => {
+  //   event.preventDefault();
+  // };
 
   const [user, setUser] = useState([]);
   useEffect(() => {
