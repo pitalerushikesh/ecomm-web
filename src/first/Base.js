@@ -6,7 +6,7 @@ const Base = ({ children, className, loading }) => {
   // const classes = styles();
   return (
     <>
-      {loading == false ? (
+      {loading === false ? (
         <Loader />
       ) : (
         <div className={className}>

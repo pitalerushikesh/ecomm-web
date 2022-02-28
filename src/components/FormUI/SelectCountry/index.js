@@ -1,6 +1,5 @@
 import { Autocomplete, TextField, Box } from "@mui/material";
 import { useField, useFormikContext } from "formik";
-import { countries } from "../../data/Countries";
 import React from "react";
 
 const SelectWrapper = ({ name, data, ...otherProps }) => {
