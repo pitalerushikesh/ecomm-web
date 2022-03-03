@@ -66,25 +66,44 @@ const AddProduct = () => {
     setLoading(false);
   };
 
-  var url =
-    "https://api.imgbb.com/1/upload?key=3647b0520ccf7b47e53971529e0ef9ff";
+  var url = "https://api.cloudinary.com/v1_1/outstanders/image/upload";
 
-  // const tpImage = async (e) => {
+  // const onUpload = async (e) => {
   //   e.preventDefault();
+  //   console.log("Im in");
   //   console.log(image);
+  //   const formData = new FormData();
+  //   formData.append("file", image);
+  //   formData.append("upload_preset", "tshirts-outstanders");
 
-  //   console.log(renamedFile);
+  //   await axios
+  //     .post(url, formData)
+  //     .then((res) => {
+  //       console.log(res);
+  //       // console.log(res.data.secure_url);
+  //       // const imgUrl = res.data.secure_url;
+  //     })
+  //     .catch((err) => {
+  //       console.log("Error", err);
+  //     });
   // };
+
+  const tpImage = async (e) => {
+    e.preventDefault();
+    console.log(image);
+  };
 
   const postImageData = async (e) => {
     e.preventDefault();
     setLoading(true);
     var file = image;
     console.log("File : ", file);
-    let formData = new FormData();
+    const formData = new FormData();
     console.log(file);
 
-    formData.append("image", file);
+    formData.append("file", file);
+    formData.append("upload_preset", "tshirts-outstanders");
+
     // formData.append("name", Date.now());
 
     let options = {
@@ -99,30 +118,25 @@ const AddProduct = () => {
     };
     try {
       await axios(options).then((res) => {
-        let _filename = res.data.data.image.filename;
+        let _filename = res;
         console.log(_filename);
-        let imageUrl = res.data.data.url;
-        console.log(res.data);
-        console.log(res.data.data.url);
+        console.log(res.data.secure_url);
+        const imageUrl = res.data.secure_url;
         if (imageUrl.length !== 0) {
           console.log("Url Added", imageUrl);
-
           onSubmit({ e, imgUrl: imageUrl });
           setLoading(false);
           handleImage(null);
-          formData = null;
         } else {
           console.log("Url Not Added");
           setLoading(false);
           handleImage(null);
-          formData = null;
         }
       });
     } catch (error) {
       console.log(error);
       setLoading(false);
       handleImage(null);
-      formData = null;
     }
   };
 
