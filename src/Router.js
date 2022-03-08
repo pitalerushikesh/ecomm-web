@@ -6,7 +6,7 @@ import CartView from "./user/CartView";
 import Homepage from "./user/Homepage";
 import ProductDetail from "./user/ProductDetail";
 import AuthProvider from "./first/SignIn/Authentication";
-//import PrivateRoute from "./first/SignIn/PrivateRoute";
+import PrivateRoute from "./first/SignIn/PrivateRoute";
 
 const Router = () => {
   return (

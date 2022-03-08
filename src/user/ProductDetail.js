@@ -15,7 +15,7 @@ import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import tshirt1 from "../assets/tshirt1.png";
 import tshirt2 from "../assets/tshirt2.png";
-import tshirt3 from "../assets/tshirt2.png";
+import tshirt3 from "../assets/tshirt.png";
 import Header from "../components/Header";
 import Base from "../first/Base";
 import firebase from "../first/Firebase";
