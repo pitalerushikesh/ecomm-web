@@ -88,10 +88,10 @@ const AddProduct = () => {
   //     });
   // };
 
-  const tpImage = async (e) => {
-    e.preventDefault();
-    console.log(image);
-  };
+  // const tpImage = async (e) => {
+  //   e.preventDefault();
+  //   console.log(image);
+  // };
 
   const postImageData = async (e) => {
     e.preventDefault();
